@@ -37,6 +37,7 @@ while running:
     print(per)
     screen.fill("Black")
     pg.draw.rect(screen, "Gray", (W / 2 - rect_w / 2-rect_h/2, H / 2 -rect_h/4, rect_w+rect_h, rect_h/2))
+    pg.draw.rect(screen, "Green", (W / 2 - rect_w / 2-rect_h/2, H / 2 -rect_h/4, rect_w+rect_h - (rect_w + rect_h - (x - (W / 2 - rect_w / 2-rect_h/2))), rect_h/2))
     pg.draw.rect(screen, "White", (x - rect_h / 2, y, rect_h, rect_h))
     pg.display.update()
     clock.tick(60)
