@@ -23,7 +23,7 @@ while running:
         if event.type == pg.QUIT:
             running = False
     #screen.fill("Black")
-    if (pg.mouse.get_pressed()[0] == True and pg.mouse.get_pos()[1] >= y - rect_h / 2 and pg.mouse.get_pos()[1] <= y + rect_h / 2 and pg.mouse.get_pos()[0] >= x - rect_h / 2 and pg.mouse.get_pos()[0] <= x + rect_h / 2 or A):
+    if (pg.mouse.get_pressed()[0] == True and pg.mouse.get_pos()[1] >= y - rect_h / 2 and pg.mouse.get_pos()[1] <= y + rect_h / 2 and pg.mouse.get_pos()[0] >= W / 2 - rect_w / 2-rect_h/2 and pg.mouse.get_pos()[0] <= W / 2 + rect_w / 2+rect_h/2 or A):
         x = pg.mouse.get_pos()[0]
         if (pg.mouse.get_pressed()[0] == True):
             A = True
