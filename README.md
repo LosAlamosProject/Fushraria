@@ -1,2 +1,2 @@
 # Fushraria
-Fake Teraria projekat tokom Letnje Skole Programiranja
+Fake Terraria projekat tokom Letnje Skole Programiranja
