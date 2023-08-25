@@ -1,0 +1,2 @@
+noise==1.2.2
+pygame-ce==2.3.0
