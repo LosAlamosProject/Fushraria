@@ -1,6 +1,4 @@
 import pygame as pg
-import math
-import keyboard
 pg.init()
  
 
