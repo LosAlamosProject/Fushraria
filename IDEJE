@@ -1,0 +1,5 @@
+FILIKILI:
+kada player udje na server server mu posalje matricu sveta
+mislim da je najbolje da ipak kamera prati igraca
+da server na osnovu x igraca napravi l i d pointere koji pokazuju odakle dokle treba iz matrice da citamo i to onda printamo
+treba da pocnemo da sve polako mergamo
