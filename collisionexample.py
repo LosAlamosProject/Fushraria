@@ -1,6 +1,6 @@
 # TODO: Merge with main game
 
-playerrect.x -= playervelocity.x * dt
+    playerrect.x -= playervelocity.x * dt
 
     
 
