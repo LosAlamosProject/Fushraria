@@ -25,7 +25,7 @@ class Button:
     def DrawSlider(self):
         global W, H
         self.x = self.X + self.rect_w * self.per / 100
-        pg.draw.rect(screen, "Gray", (self.X-self.rect_h/2, self.Y, self.rect_w+self.rect_h, self.rect_h/2))
+        pg.draw.rect(screen, "Gray", (self.X-self.rect_h/2, self.Y, self.rect_w, self.rect_h/2))
         pg.draw.rect(screen, "Green", (self.X-self.rect_h/2, self.Y, self.rect_w+self.rect_h - (self.rect_w + self.rect_h - (self.x - (self.X))), self.rect_h/2))
 
 slider = Button(50, 300, 30, 200, 250)
