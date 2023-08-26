@@ -1,5 +1,5 @@
 class Character:
-  def __init__(self, posX, posY, health, stamina, defence, dmg, W, H, skin,  isInAir, isOnIce, isInWater, isFlying, isSprinting, o2):
+  def __init__(self, posX, posY, health, stamina, defence, dmg, W, H, skin,  isInAir, blockStandingOn, isInWater, isFlying, isSprinting, o2):
     self.centerx = posX
     self.centery = posY
     self.W = W
@@ -10,7 +10,7 @@ class Character:
     self.dmg = dmg
     self.isInAir = isInAir
     self.skin = skin
-    self.isOnice = isOnIce
+    self.blockStandingOn = blockStandingOn
     self.isInWater = isInWater
     self.isFlying = isFlying
     self.isSprinting = isSprinting
