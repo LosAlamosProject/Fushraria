@@ -1,4 +1,3 @@
-
 import pygame as pg
 import random
 import math
@@ -27,16 +26,22 @@ def drawdugme(dugme, highlight,klik):
         if klik:
             dugme1.text = "kliknuto"
         if not highlight:
+            pg.draw.circle(screen, dugme.color,(175,200),50)
+            pg.draw.circle(screen, dugme.color,(425,200),50)
             pg.draw.rect(screen, dugme.color, (dugme.centerx-dugme.W/2, dugme.centery-dugme.H/2, dugme.W, dugme.H))
             font1 = pg.font.SysFont('Comic Sans MS', math.floor(dugme.H*0.8))
             img1 = font1.render(dugme.text, True, dugme.textcolor)
             screen.blit(img1, (dugme.centerx-dugme.W/2, dugme.centery-dugme.H*0.7))
         else:
+            pg.draw.circle(screen, dugme.lightcolor,(175,200),50)
+            pg.draw.circle(screen, dugme.lightcolor,(425,200),50)
             pg.draw.rect(screen, dugme.lightcolor, (dugme.centerx-dugme.W/2, dugme.centery-dugme.H/2, dugme.W, dugme.H))
             font1 = pg.font.SysFont('Comic Sans MS', math.floor(dugme.H*0.8))
             img1 = font1.render(dugme.text, True, dugme.textcolor)
             screen.blit(img1, (dugme.centerx-dugme.W/2, dugme.centery-dugme.H*0.7))
         pg.display.update()
+
+pg.draw.circle(screen, 'red',(300,250),50)
 
 while running:
     for event in pg.event.get():
