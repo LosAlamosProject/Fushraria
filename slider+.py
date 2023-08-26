@@ -10,8 +10,7 @@ clock = pg.time.Clock()
 running = True
 
 class Button:
-    def __init__(self, per, rect_w, rect_h, A):
-        self.per = per
+    def __init__(self, rect_w, rect_h, A):
         self.rect_w = rect_w
         self.rect_h = rect_h
         self.A = A
@@ -35,7 +34,7 @@ class Button:
         pg.draw.rect(screen, "Green", (W / 2 - self.rect_w / 2-self.rect_h/2, H / 2 -self.rect_h/4, self.rect_w+self.rect_h - (self.rect_w + self.rect_h - (self.x - (W / 2 - self.rect_w / 2-self.rect_h/2))), self.rect_h/2))
         pg.draw.rect(screen, "White", (self.x - self.rect_h / 2, self.y, self.rect_h, self.rect_h))
 
-slider = Button(0, 300, 30, False)
+slider = Button(300, 30, False)
 
 while running:
     for event in pg.event.get():
