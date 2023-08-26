@@ -25,7 +25,7 @@ pg.init()
 screen = pg.display.set_mode((1280, 800))
 clock = pg.time.Clock()
     # Create the character
-character = Character(100, 250, 0, 0, 95, 45, 10, 10, 45, 96, "player.png", True, False, False, False, False, 0)
+character = Character(100, 250, 0, 0, 95, 40, 10, 10, 45, 96, "player.png", True, False, False, False, False, 0)
 
 
 
@@ -69,28 +69,57 @@ while True:
                 pg.quit()
                 sys.exit()
         keys = pg.key.get_pressed()
+        cangoL = True
+        cangoR = True
+        for i in range(WORLDH):
+            if world[i][(character.posX-character.W//2)//50] == 1:
+                groundLevel1 = i * 50
+                break
+        for i in range(WORLDH):
+            if world[i][(character.posX-character.W//2)//50+1] == 1:
+                groundLevel2 = i * 50
+                break
+        print(groundLevel1, groundLevel2)
+        if(round(character.posX/50) == math.floor(character.posX/50)):
+            if character.posY + character.H/2 < groundLevel1:
+                character.isInAir = True
+            elif character.posY + character.H/2 > groundLevel1:
+                character.isInAir = False
+                character.posY = groundLevel2-character.H/2
+                cangoL = False
+            else:
+                character.isInAir = False
+        else:
+            if character.posY + character.H/2 < groundLevel2:
+                character.isInAir = True
+            elif character.posY + character.H/2 > groundLevel2:
+                character.isInAir = False
+                character.posY = groundLevel2-character.H/2
+                cangoR= False
+            else:
+                character.isInAir = False    
         if keys[pg.K_a]:
             velocityX = -5 #PLAYER.SPEED
         elif keys[pg.K_d]:
             velocityX = 5 #PLAYER>SPEED
         else:
             velocityX = 0
-        justjumped = False
         if keys[pg.K_SPACE] and character.isInAir == False:
-            velocityY -= 20      #PLAYER.JUMPHEIGHT
+            velocityY -= 15     #PLAYER.JUMPHEIGHT
             character.isInAir = True
-            justjumped = True
         velocityY += 1 #GRAVITY
-        print(math.floor((character.posX+character.W/2)/50), (character.posY+character.H//2)//50)
-        if  world[(character.posY+character.H//2)//50][math.floor((character.posX+character.W/2)/50)] == 1:
-            character.isInAir = False
-        else:
-            character.isInAir = True
-        if character.isInAir == True or justjumped:
+        
+        if character.isInAir == True:
             character.posY += velocityY
+        
         # Update the character's position
-        character.posX += velocityX
+        if velocityX < 0 and cangoL:
+            character.posX += velocityX
+        else:
+            if cangoR:
+                character.posX += velocityX
+
         print(character.posX/50, character.posY/50)
         draw()
 
-        clock.tick(60)
+        clock.tick(30)
