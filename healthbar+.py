@@ -9,7 +9,7 @@ screen.fill("Black")
 clock = pg.time.Clock()
 running = True
 
-class Button:
+class Healthbar:
     #per je za koliko procenata ce imati healthbar na pocetku
     #rect_w je za sirinu healthbar
     #rect_h je za visinu healthbar
@@ -31,7 +31,7 @@ class Button:
         img1 = font1.render(str(int(self.per)), True, 'Black')
         screen.blit(img1, (self.X-self.rect_h/2, self.Y - self.rect_h/6.5))
 
-slider = Button(100, 300, 30, 200, 250)
+slider = Healthbar(100, 300, 30, 200, 250)
 
 while running:
     for event in pg.event.get():
