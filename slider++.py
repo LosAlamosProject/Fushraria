@@ -9,7 +9,7 @@ screen.fill("Black")
 clock = pg.time.Clock()
 running = True
 
-class Button:
+class Slider:
     #per je za koliko procenata ce imati slider na pocetku
     #rect_w je za sirinu slidera
     #rect_h je za visinu slidera
@@ -42,7 +42,7 @@ class Button:
         pg.draw.rect(screen, "Green", (self.X-self.rect_h/2, self.Y, self.rect_w+self.rect_h - (self.rect_w + self.rect_h - (self.x - (self.X))), self.rect_h/2))
         pg.draw.rect(screen, "White", (self.x - self.rect_h / 2, self.Y - self.rect_h/4, self.rect_h, self.rect_h))
 
-slider = Button(50, 300, 30, False, 200, 300)
+slider = Slider(50, 300, 30, False, 200, 300)
 
 while running:
     for event in pg.event.get():
