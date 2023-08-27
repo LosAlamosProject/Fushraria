@@ -43,11 +43,11 @@ for x, tile in enumerate(world[0]):
     elif gen < 0: 
         for i in range(0-int(gen * 10) + 10,100): world[i][x] = 1
 Block_Dict = {
-    0 : {"block_name" : "Air" , "breaking_time" : 0 , "breaking_tool" : "null", "hardness" : 1000, "texture" : pg.image.load("C:\\Users\\korisnik\\Desktop\\filikili\\air.png").convert() , "walk_sound" : "null", "break_sound" : "null"},
-    2 : {"block_name" : "Dirt" , "breaking_time" : 60 , "breaking_tool" : "shovel", "hardness" : 1, "texture" : pg.image.load("C:\\Users\\korisnik\\Desktop\\filikili\\dirt.png").convert() , "walk_sound" : "dirtwalk.ogg", "break_sound" : "dirtbreak.ogg"},
-    1 : {"block_name" : "Stone" , "breaking_time" : 120 , "breaking_tool" : "pickaxe", "hardness" : 1, "texture" : pg.image.load("C:\\Users\\korisnik\\Desktop\\filikili\\stone.png").convert() , "walk_sound" : "stonewalk.ogg", "break_sound" : "stonebreak.ogg"},
-    3 : {"block_name" : "Bedrok" , "breaking_time" : 0 , "breaking_tool" : "null", "hardness" : 6969, "texture" : "bedrock.png" , "walk_sound" : "bedrock.ogg", "break_sound" : "null"},
-    4 :  {"block_name" : "Grass" , "breaking_time" : 60 , "breaking_tool" : "shovel", "hardness" : 1, "texture" : pg.image.load("C:\\Users\\korisnik\\Desktop\\filikili\\grass.png").convert() , "walk_sound" : "dirtwalk.ogg", "break_sound" : "dirtbreak.ogg"}
+    0 : {"block_name" : "Air" , "breaking_time" : 0 , "breaking_tool" : "null", "hardness" : 1000, "texture" : pg.image.load("./Pixel Art/Nebo.png").convert() , "walk_sound" : "null", "break_sound" : "null"},
+    2 : {"block_name" : "Dirt" , "breaking_time" : 60 , "breaking_tool" : "shovel", "hardness" : 1, "texture" : pg.image.load("./Pixel Art/Ground block.png").convert() , "walk_sound" : "dirtwalk.ogg", "break_sound" : "dirtbreak.ogg"},
+    1 : {"block_name" : "Stone" , "breaking_time" : 120 , "breaking_tool" : "pickaxe", "hardness" : 1, "texture" : pg.image.load("./Pixel Art/Stone.png").convert() , "walk_sound" : "stonewalk.ogg", "break_sound" : "stonebreak.ogg"},
+    3 : {"block_name" : "Bedrok" , "breaking_time" : 0 , "breaking_tool" : "null", "hardness" : 6969, "texture" : pg.image.load("./Pixel Art/Drvo.png") , "walk_sound" : "bedrock.ogg", "break_sound" : "null"},
+    4 :  {"block_name" : "Grass" , "breaking_time" : 60 , "breaking_tool" : "shovel", "hardness" : 1, "texture" : pg.image.load("./Pixel Art/Grass block.png").convert() , "walk_sound" : "dirtwalk.ogg", "break_sound" : "dirtbreak.ogg"}
 }
 def draw(menjansvet):
     
@@ -87,6 +87,47 @@ while True:
             if event.type == pg.QUIT:
                 pg.quit()
                 sys.exit()
+            if event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
+                world = [[0 for i in range(100)] for i in range(100)]
+
+                startx = random.randint(1,10000)
+                treex = [0 for i in range(len(world[0]))]
+                for x, tile in enumerate(world[0]):
+                    gen = noise.pnoise1(x * 0.1 + startx, repeat=999999999)
+                    if gen >= 0: 
+                        for i in range(int(gen * 10) + 10,100): world[i][x] = 1
+                    elif gen < 0: 
+                        for i in range(0-int(gen * 10) + 10,100): world[i][x] = 1
+
+                    
+
+                    if random.randint(0,3) == 0 and (x - 1 > 0 and treex[x - 1] == 0) and (x + 1 < len(treex) and treex[x + 1] == 0): 
+                        treeheight = random.randint(5,7)
+                        treestart = 0
+                        for i in range(99,0,-1):
+                            if world[i][x] == 0: 
+                                for a in range(treeheight): 
+                                    try: 
+                                        world[i - a][x] = 3
+                                        treestart = i
+                                    except: pass
+                                break
+                        treex[x] = 2
+                        
+                        for l in range(-1,2):
+                            for j in range(-1,2):
+                                world[treestart - treeheight + l][x + j] = 3
+
+                for x in range(100):
+                    counter = 0
+                    for y in range (100):
+                        if world[y][x] == 1 and counter == 0:
+                            world[y][x] = 4
+                            counter = counter+1
+                        elif world[y][x] == 1 and counter < 3:
+                            world[y][x] = 2
+                            counter = counter +1
+
         mozeDesno = True
         mozeLevo = True
         if (character.posX-character.W/2) % 32 != 0:
@@ -129,6 +170,28 @@ while True:
             character.vY +=1
         else:
             character.vY = 0
+
+        # if keys[pg.K_ESCAPE]:
+        #     world = [[0 for i in range(100)] for i in range(100)]
+
+        #     startx = random.randint(1,10000)
+        #     for x, tile in enumerate(world[0]):
+        #         gen = noise.pnoise1(x * 0.1 + startx, repeat=999999999)
+        #         if gen >= 0: 
+        #             for i in range(int(gen * 10) + 10,100): world[i][x] = 1
+        #         elif gen < 0: 
+        #             for i in range(0-int(gen * 10) + 10,100): world[i][x] = 1
+
+        #     for x in range(100):
+        #         counter = 0
+        #         for y in range (100):
+        #             if world[y][x] == 1 and counter == 0:
+        #                 world[y][x] = 4
+        #                 counter = counter+1
+        #             elif world[y][x] == 1 and counter < 3:
+        #                 world[y][x] = 2
+        #                 counter = counter +1
+
         character.posY += character.vY
         print(character.posX, character.posY)
 
