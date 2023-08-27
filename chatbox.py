@@ -17,12 +17,13 @@ user_text4 = 'AAAA'
 user_text5 = 'AAAAA'
 L = [user_text1, user_text2, user_text3, user_text4, user_text5]
 w = 280
+a = False
 
 while running:
     for event in pg.event.get():
         if event.type == pg.QUIT:
             running = False
-        if event.type == pg.KEYDOWN:
+        if event.type == pg.KEYDOWN and a:
             if event.key == pg.K_BACKSPACE:
                 user_text = user_text[:-1]
             elif event.key == pg.K_RETURN:
@@ -32,8 +33,11 @@ while running:
                 user_text2 = user_text1
                 user_text1 = user_text
                 user_text = ''
+                a = False
             else:
                 user_text += event.unicode
+    if (pg.mouse.get_pressed()[0] == True and pg.mouse.get_pos()[0] >= 15 and pg.mouse.get_pos()[0] <= 280 and pg.mouse.get_pos()[1] >= 155 and pg.mouse.get_pos()[1] <= 185):
+        a = True
     screen.fill("White")
     pg.draw.rect(screen, "Black", (0, 0, 300, 190))
     pg.draw.rect(screen, "Gray", (10, 155, w, 30))
