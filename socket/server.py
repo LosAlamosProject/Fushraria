@@ -16,6 +16,7 @@ world=[]
 s.listen(2)
 print("Waiting for a connection, Server Started")
 poze=[]
+chats=["","","","",""]
 def threaded_client(conn, player):
     global world
     conn.send(json.dumps({"id":player,"world":world}).encode())
@@ -23,7 +24,11 @@ def threaded_client(conn, player):
         try:
             data = conn.recv(4096)
             data = json.loads(data.decode())
-            world=data.get("world")
+            isChanged=data.get("isChanged")
+            chat=data.get("chat")
+            if chat!="":
+                chats.append(chat)
+            world= [data.get("world") if isChanged else world][0]
             data=data.get("poz")
             poze[player][0]=data[0]
             poze[player][1]=data[1]
@@ -38,7 +43,7 @@ def threaded_client(conn, player):
                 print("Disconnected")
                 break
             print(data)
-            conn.sendall(json.dumps({"poz":poze,"world":world}).encode())
+            conn.sendall(json.dumps({"poz":poze,"world":world,"chats":chats[-5:]}).encode())
         except socket.error as e:
             print(e)
 
