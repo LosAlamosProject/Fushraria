@@ -24,7 +24,11 @@ class Character:
     self.o2 = o2
 pg.init()
 
-screen = pg.display.set_mode((1280, 800))
+W=pg.display.Info().current_w
+H=pg.display.Info().current_h
+
+screen = pg.display.set_mode((W, H))
+
 clock = pg.time.Clock()
     # Create the character
 character = Character(1000, 250, 0, 0, 100, 100, 10, 10, 32, 64, "playerL.png", "playerD.png", True, False, False, False, False, 0)
@@ -34,7 +38,7 @@ ground = pg.Rect(0, 500, 800, 100)
  
 yd = 0
 
-world = [[0 for i in range(200)] for i in range(200)]
+world = [[0 for i in range(200)] for i in range(400)]
 
 startx = random.randint(1,10000)
 for x, tile in enumerate(world[0]):
@@ -75,7 +79,6 @@ LB = [1, 1, 1, 1, 1, 0, 0, 0, 0]
 #DRAW
 def draw(menjansvet, daynightcycle):
     global slot, W, H, L, LB, font1
-    print(daynightcycle)
     screen.fill((0,120*daynightcycle//25000,255*daynightcycle//25000))
     # yd -= 1
     # pg.draw.rect(screen, "white", ground)
@@ -231,13 +234,15 @@ for x in range(200):
         elif world[y][x] == 1 and counter < 3:
             world[y][x] = 2
             counter = counter +1
-print(world)
 framecounter = 0
 daynightcycle = 0
 draw(True,0)
+a=False
 while True:
         if (pg.mouse.get_pressed()[0] == True and pg.mouse.get_pos()[0] >= 15 and pg.mouse.get_pos()[0] <= 280 and pg.mouse.get_pos()[1] >= 155 and pg.mouse.get_pos()[1] <= 185):
             a = True
+        elif pg.mouse.get_pressed()[0]:
+          a=False
         if daynightcycle == 0:
             spusta = False
         framecounter = framecounter%100+1
