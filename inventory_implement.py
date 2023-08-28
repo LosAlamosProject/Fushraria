@@ -36,7 +36,7 @@ ground = pg.Rect(0, 500, 800, 100)
 
 #-----INVENTORY-----#
 font1 = pg.font.SysFont('Comic Sans MS', 25, bold=pg.font.Font.bold)
-a = 1
+slot = 1
 XX = (W - 620) / 2
 #DODAJTE SLIKE DOLE
 image = pg.image.load("C:\\Users\\korisnik\\Downloads\\BlueCube.png").convert()
@@ -69,7 +69,7 @@ Block_Dict = {
 }
 screen.fill("blue")
 def draw(menjansvet):
-    global a, W, H, L, LB, font1
+    global slot, W, H, L, LB, font1
     
     screen.fill("blue")
     # yd -= 1
@@ -95,28 +95,28 @@ def draw(menjansvet):
                 screen.blit(imp,(cnt2*32,cnt1 *32))
 
     #-----INVENTORY-----#
-    if a < 1:
-        a = 9
-    if a > 9:
-        a = 1
+    if slot < 1:
+        slot = 9
+    if slot > 9:
+        slot = 1
     pg.draw.rect(screen, "Black", (XX - 25,  H - 150, 670, 110))
-    if (a == 1):
+    if (slot == 1):
         pg.draw.rect(screen, "Gold", (XX - 5,  H - 130, 70, 70))
-    elif (a == 2):
+    elif (slot == 2):
         pg.draw.rect(screen, "Gold", (XX + 70 - 5,  H - 130, 70, 70))
-    elif (a == 3):
+    elif (slot == 3):
         pg.draw.rect(screen, "Gold", (XX + 70 * 2 - 5,  H - 130, 70, 70))
-    elif (a == 4):
+    elif (slot == 4):
         pg.draw.rect(screen, "Gold", (XX + 70 * 3 - 5,  H - 130, 70, 70))
-    elif (a == 5):
+    elif (slot == 5):
         pg.draw.rect(screen, "Gold", (XX + 70 * 4 - 5,  H - 130, 70, 70))
-    elif (a == 6):
+    elif (slot == 6):
         pg.draw.rect(screen, "Gold", (XX + 70 * 5 - 5,  H - 130, 70, 70))
-    elif (a == 7):
+    elif (slot == 7):
         pg.draw.rect(screen, "Gold", (XX + 70 * 6 - 5,  H - 130, 70, 70))
-    elif (a == 8):
+    elif (slot == 8):
         pg.draw.rect(screen, "Gold", (XX + 70 * 7 - 5,  H - 130, 70, 70))
-    elif (a == 9):
+    elif (slot == 9):
         pg.draw.rect(screen, "Gold", (XX + 70 * 8 - 5,  H - 130, 70, 70))
     pg.draw.rect(screen, "Gray", (XX,  H - 125, 60, 60))
     pg.draw.rect(screen, "Gray", (XX + 70,  H - 125, 60, 60))
@@ -222,28 +222,28 @@ while True:
                 sys.exit()
             if event.type == pg.MOUSEWHEEL:
                 if event.y > 0:
-                    a += 1
+                    slot += 1
                 if event.y < 0:
-                    a -= 1
+                    slot -= 1
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_1:
-                    a = 1
+                    slot = 1
                 if event.key == pg.K_2:
-                    a = 2
+                    slot = 2
                 if event.key == pg.K_3:
-                    a = 3
+                    slot = 3
                 if event.key == pg.K_4:
-                    a = 4
+                    slot = 4
                 if event.key == pg.K_5:
-                    a = 5
+                    slot = 5
                 if event.key == pg.K_6:
-                    a = 6
+                    slot = 6
                 if event.key == pg.K_7:
-                    a = 7
+                    slot = 7
                 if event.key == pg.K_8:
-                    a = 8
+                    slot = 8
                 if event.key == pg.K_9:
-                    a = 9
+                    slot = 9
         mozeDesno = True
         mozeLevo = True
         if character.isInAir == False:
