@@ -44,15 +44,16 @@ for x, tile in enumerate(world[0]):
     elif gen < 0: 
         for i in range(0-int(gen * 10) + 25,200): world[i][x] = 1
 Block_Dict = {
-    0 : {"block_name" : "Air" , "breaking_time" : 0 , "breaking_tool" : "null", "hardness" : 1000, "texture" : pg.image.load(".\\air.png").convert() , "walk_sound" : "null", "break_sound" : "null"},
+    0 : {"block_name" : "Air" , "breaking_time" : 0 , "breaking_tool" : "null", "hardness" : 1000, "texture" : "null" , "walk_sound" : "null", "break_sound" : "null"},
     2 : {"block_name" : "Dirt" , "breaking_time" : 60 , "breaking_tool" : "shovel", "hardness" : 1, "texture" : pg.image.load(".\\dirt.png").convert() , "walk_sound" : "dirtwalk.ogg", "break_sound" : "dirtbreak.ogg"},
     1 : {"block_name" : "Stone" , "breaking_time" : 120 , "breaking_tool" : "pickaxe", "hardness" : 1, "texture" : pg.image.load(".\\stone.png").convert() , "walk_sound" : "stonewalk.ogg", "break_sound" : "stonebreak.ogg"},
     3 : {"block_name" : "Bedrok" , "breaking_time" : 0 , "breaking_tool" : "null", "hardness" : 6969, "texture" : "bedrock.png" , "walk_sound" : "bedrock.ogg", "break_sound" : "null"},
     4 :  {"block_name" : "Grass" , "breaking_time" : 60 , "breaking_tool" : "shovel", "hardness" : 1, "texture" : pg.image.load(".\\grass.png").convert() , "walk_sound" : "dirtwalk.ogg", "break_sound" : "dirtbreak.ogg"}
 }
+screen.fill("blue")
 def draw(menjansvet):
     
-    screen.fill("black")
+    screen.fill("blue")
     # yd -= 1
     # pg.draw.rect(screen, "white", ground)
     
@@ -69,10 +70,17 @@ def draw(menjansvet):
             cnt1 += 1
             cnt2 =-1  
             for x in range(l,r):
-                    cnt2 += 1
-                    imp = Block_Dict[world[y][x]]["texture"]
-                    screen.blit(imp,(cnt2*32,cnt1 *32))
-    pg.draw.rect(screen, "red", (screen.get_width()//2, screen.get_height()//2-15 ,character.W, character.H))
+                cnt2 += 1
+                if world[y][x] == 0:
+                    continue
+                imp = Block_Dict[world[y][x]]["texture"]    
+                screen.blit(imp,(cnt2*32,cnt1 *32))
+        
+                        
+                
+                
+                
+    pg.draw.rect(screen, "red", (screen.get_width()//2-32, screen.get_height()//2-15            ,character.W, character.H))
     pg.display.flip()
  
 
@@ -91,49 +99,65 @@ framecounter = 0
 draw(True)
 while True:
         framecounter = framecounter%100+1
-        character.isInAir = True
         # dt = clock.tick(60) / 1000
+        character.isInAir = True
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 pg.quit()
                 sys.exit()
         mozeDesno = True
         mozeLevo = True
-        if (character.posX-character.W/2) % 32 != 0:
-            if world[int(character.posY+character.H/2)//32][int(character.posX-character.W/2)//32] >0:
-                character.posY -= character.posY %32
-                character.isInAir = False
-            if world[int(character.posY+character.H/2)//32][int(character.posX-character.W/2)//32+1] >0:
-                character.posY -= character.posY %32
-                character.isInAir = False
+        if character.isInAir == False:
+                    if (character.posY+character.H/2 )%32 ==0:
+                        if world[int(character.posY+character.H/2)//32][(character.posX-character.W//2)//32-1] >0:
+                            character.isInAir = False
+                        else:
+                            character.isInAir=True
+                    else:   
+                            if world[int(character.posY+character.H/2)//32][(character.posX-character.W//2)//32] >0:
+                                character.posY -= character.posY%32
+                                character.isInAir = False
+                    if world[int(character.posY+character.H/2-1)//32][(character.posX-character.W//2)//32] > 0: #dolelevo
+                        mozeLevo = False                        
+                    if world[int(character.posY-character.H/2)//32][(character.posX-character.W//2)//32] >0: #gorelevo
+                        mozeLevo = False                        
+                    if world[int(character.posY+character.H/2-1)//32][(character.posX-character.W//2)//32+2] > 0:
+                        mozeDesno = False                        
+                    if world[int(character.posY-character.H/2)//32][(character.posX-character.W//2)//32+2] >0:
+                        mozeDesno = False                        
+                        
+                    
         else:
-            if world[int(character.posY+character.H/2-1)//32][(character.posX-character.W//2)//32-1] > 0:
-                mozeLevo = False
-            if world[int(character.posY-character.H/2)//32][(character.posX-character.W//2)//32-1] >0:
-                mozeLevo=False
-            if world[int(character.posY+character.H/2-1)//32][(character.posX-character.W//2)//32+1] > 0:
-                mozeDesno = False
-            if world[int(character.posY-character.H/2)//32][(character.posX-character.W//2)//32+1] >0:
-                mozeDesno=False
-            if world[int(character.posY+character.H/2-1)//32][(character.posX-character.W//2)//32-1] > 0:
-                mozeLevo = False
-            if (character.posY+character.H/2 %32) ==0:
-                if world[int(character.posY+character.H/2+1)//32+1][(character. posX-character.W//2)//32] >0:
-                    character.posY -= character.posY %32
-                    character.isInAir=False
-            else:
-                if world[int(character.posY+character.H/2)//32][(character. posX-character.W//2)//32] >0:
-                    character.isInAir=False
+                    if world[int(character.posY-character.posY%32-character.H/2)//32][(character.posX-character.W//2)//32-1] > 0: #dolelevo
+                        mozeLevo = False                        
+                    if world[int(character.posY-character.posY%32+32-character.H/2)//32][(character.posX-character.W//2)//32-1] >0: #gorelevo
+                        mozeLevo = False                        
+                    if world[int(character.posY-character.posY%32-character.H/2)//32][(character.posX-character.W//2)//32+1] > 0:
+                        mozeDesno = False                        
+                    if world[int(character.posY-character.posY%32+32-character.H/2)//32][(character.posX-character.W//2)//32+1] >0:
+                        mozeDesno = False                        
+                        
+                    if (character.posY+character.H/2 )%32 ==0:
+                        if world[int(character.posY+character.H/2)//32][(character.posX-character.W//2)//32] >0:
+                            character.isInAir = False
+                    else:   
+                        if world[int(character.posY+character.H/2-character.posY%32)//32][(character.posX-character.W//2)//32] >0:
+                            character.posY -= character.posY%32
+                            character.isInAir = False
+                        if world[int(character.posY+character.H/2-character.posY%32)//32-1][(character.posX-character.W//2)//32] >0:
+                            character.posY -= 32
+                            character.isInAir = False
+                
         keys = pg.key.get_pressed()
-        if character.posX>= 5780:
+        if character.posX>= 5600:
             mozeDesno = False
         if character.posX <= 800:
             mozeLevo = False 
-        print(mozeLevo, mozeDesno, character.isInAir)
-        if keys[pg.K_a] and mozeLevo:
-            character.posX -= 8
-        if keys[pg.K_d] and mozeDesno:
-            character.posX += 8   
+        
+        if keys[pg.K_a] and mozeLevo and framecounter%8==0:
+            character.posX -= 32
+        if keys[pg.K_d] and mozeDesno and framecounter%8==0:
+            character.posX += 32   
         if not character.isInAir:
             character.vY = 0
         if keys[pg.K_SPACE] and character.isInAir == False:
@@ -144,7 +168,7 @@ while True:
         else:
             character.vY = 0
         character.posY += character.vY
-        print(character.posX, character.posY)
+        
 
         #KOD ZA RAZBIJANJE BLOKOVA
         # menjansvet = true
