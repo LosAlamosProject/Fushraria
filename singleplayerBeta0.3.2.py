@@ -3,7 +3,7 @@ import sys, random
 import noise
 
 class Character:
-  def __init__(self, posX, posY, vX, vY ,health, stamina, defence, dmg, W, H, skin,  isInAir, isOnIce, isInWater, isFlying, isSprinting, o2):
+  def __init__(self, posX, posY, vX, vY ,health, stamina, defence, dmg, W, H, skinL, skinD , isInAir, isOnIce, isInWater, isFlying, isSprinting, o2):
     self.posX = posX
     self.posY = posY
     self.vX = vX
@@ -15,7 +15,8 @@ class Character:
     self.defence = defence
     self.dmg = dmg
     self.isInAir = isInAir
-    self.skin = skin
+    self.skinL = skinL
+    self.skinD = skinD
     self.isOnice = isOnIce
     self.isInWater = isInWater
     self.isFlying = isFlying
@@ -26,7 +27,7 @@ pg.init()
 screen = pg.display.set_mode((1280, 800))
 clock = pg.time.Clock()
     # Create the character
-character = Character(1000, 250, 0, 0, 100, 100, 10, 10, 32, 64, "player.png", True, False, False, False, False, 0)
+character = Character(1000, 250, 0, 0, 100, 100, 10, 10, 32, 64, "playerL.png", "playerD.png", True, False, False, False, False, 0)
     # Create the ground
 ground = pg.Rect(0, 500, 800, 100)
     # Main game loop
@@ -46,10 +47,12 @@ for x, tile in enumerate(world[0]):
 Block_Dict = {
     0 : {"block_name" : "Air" , "breaking_time" : 0 , "breaking_tool" : "null", "hardness" : 1000, "texture" : "null" , "walk_sound" : "null", "break_sound" : "null"},
     2 : {"block_name" : "Dirt" , "breaking_time" : 60 , "breaking_tool" : "shovel", "hardness" : 1, "texture" : pg.image.load(".\\dirt.png").convert() , "walk_sound" : "dirtwalk.ogg", "break_sound" : "dirtbreak.ogg"},
-    1 : {"block_name" : "Stone" , "breaking_time" : 120 , "breaking_tool" : "pickaxe", "hardness" : 1, "texture" : pg.image.load(".\\stone.png").convert() , "walk_sound" : "stonewalk.ogg", "break_sound" : "stonebreak.ogg"},
+    1 : {"block_name" : "Stone" , "breaking_time" : 180 , "breaking_tool" : "pickaxe", "hardness" : 1, "texture" : pg.image.load(".\\stone.png").convert() , "walk_sound" : "stonewalk.ogg", "break_sound" : "stonebreak.ogg"},
     3 : {"block_name" : "Bedrok" , "breaking_time" : 0 , "breaking_tool" : "null", "hardness" : 6969, "texture" : "bedrock.png" , "walk_sound" : "bedrock.ogg", "break_sound" : "null"},
-    4 :  {"block_name" : "Grass" , "breaking_time" : 60 , "breaking_tool" : "shovel", "hardness" : 1, "texture" : pg.image.load(".\\grass.png").convert() , "walk_sound" : "dirtwalk.ogg", "break_sound" : "dirtbreak.ogg"}
-}
+    4 :  {"block_name" : "Grass" , "breaking_time" : 60 , "breaking_tool" : "shovel", "hardness" : 1, "texture" : pg.image.load(".\\grass.png").convert() , "walk_sound" : "dirtwalk.ogg", "break_sound" : "dirtbreak.ogg",},
+    5: {"block_name" : "Wood" , "breaking_time" : 120 , "breaking_tool" : "axe", "hardness" : 1, "texture" : "wood.png" , "walk_sound" : "woodwalk.ogg", "break_sound" : "woodbreak.ogg"},
+    6: {"block_name" : "Leaves" , "breaking_time" : 30 , "breaking_tool" : "null", "hardness" : 1, "texture" :"leaves.png" , "walk_sound" : "leaveswalk.ogg", "break_sound" : "leavesbreak.ogg"}}
+
 screen.fill("blue")
 def draw(menjansvet, daynightcycle):
     print(daynightcycle)
@@ -73,6 +76,7 @@ def draw(menjansvet, daynightcycle):
                 cnt2 += 1
                 if world[y][x] == 0:
                     continue
+                world[21][100] = 1
                 imp = Block_Dict[world[y][x]]["texture"]    
                 screen.blit(imp,(cnt2*32,cnt1 *32))
         
@@ -148,6 +152,10 @@ while True:
                     if (character.posY+character.H/2 )%32 ==0:
                         if world[int(character.posY+character.H/2)//32][(character.posX-character.W//2)//32] >0:
                             character.isInAir = False
+                        if world[int(character.posY-character.H/2)//32-1][(character.posX-character.W//2)//32] >0:
+                            character.vY = 0
+                            character.isInAir = True
+                            
                     else:   
                         if world[int(character.posY+character.H/2-character.posY%32)//32][(character.posX-character.W//2)//32] >0:
                             character.posY -= character.posY%32
@@ -155,6 +163,9 @@ while True:
                         if world[int(character.posY+character.H/2-character.posY%32)//32-1][(character.posX-character.W//2)//32] >0:
                             character.posY -= 32
                             character.isInAir = False
+                        if world[int(character.posY-character.H/2-character.posY%32)//32][(character.posX-character.W//2)//32] >0:
+                            character.vY = 0
+                            character.isInAir = True
                 
         keys = pg.key.get_pressed()
         if character.posX>= 5600:
@@ -185,4 +196,4 @@ while True:
         menjansvet = False
         draw(True,daynightcycle)
 
-        clock.tick(10000)
+        clock.tick(100)
