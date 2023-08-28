@@ -50,11 +50,31 @@ Block_Dict = {
     1 : {"block_name" : "Stone" , "breaking_time" : 180 , "breaking_tool" : "pickaxe", "hardness" : 1, "texture" : pg.image.load(".\\stone.png").convert() , "walk_sound" : "stonewalk.ogg", "break_sound" : "stonebreak.ogg"},
     3 : {"block_name" : "Bedrok" , "breaking_time" : 0 , "breaking_tool" : "null", "hardness" : 6969, "texture" : "bedrock.png" , "walk_sound" : "bedrock.ogg", "break_sound" : "null"},
     4 :  {"block_name" : "Grass" , "breaking_time" : 60 , "breaking_tool" : "shovel", "hardness" : 1, "texture" : pg.image.load(".\\grass.png").convert() , "walk_sound" : "dirtwalk.ogg", "break_sound" : "dirtbreak.ogg",},
-    5: {"block_name" : "Wood" , "breaking_time" : 120 , "breaking_tool" : "axe", "hardness" : 1, "texture" : "wood.png" , "walk_sound" : "woodwalk.ogg", "break_sound" : "woodbreak.ogg"},
-    6: {"block_name" : "Leaves" , "breaking_time" : 30 , "breaking_tool" : "null", "hardness" : 1, "texture" :"leaves.png" , "walk_sound" : "leaveswalk.ogg", "break_sound" : "leavesbreak.ogg"}}
+    5: {"block_name" : "Wood" , "breaking_time" : 120 , "breaking_tool" : "axe", "hardness" : 1, "texture" : pg.image.load(".\\wood.png").convert(), "walk_sound" : "woodwalk.ogg", "break_sound" : "woodbreak.ogg"},
+    6: {"block_name" : "Leaves" , "breaking_time" : 30 , "breaking_tool" : "null", "hardness" : 1, "texture" :pg.image.load(".\\leaves.png").convert() , "walk_sound" : "leaveswalk.ogg", "break_sound" : "leavesbreak.ogg"}}
+
+
+
+poruke=["","","","",""]
+user_text = ''
+a = False
+w = 280
+font = pg.font.Font(None, 32)
 
 screen.fill("blue")
+#---INVENTORY-----
+font1 = pg.font.SysFont('Comic Sans MS', 25, bold=pg.font.Font.bold)
+slot = 1
+H = 850
+XX = (1280 - 620) / 2
+L = [Block_Dict[1]["texture"], Block_Dict[2]["texture"], Block_Dict[4]["texture"], Block_Dict[5]["texture"], Block_Dict[6]["texture"], 0,0,0, 0]
+LB = [1, 1, 1, 1, 1, 0, 0, 0, 0]
+
+
+#-----INVENTORY-----#
+#DRAW
 def draw(menjansvet, daynightcycle):
+    global slot, W, H, L, LB, font1
     print(daynightcycle)
     screen.fill((0,120*daynightcycle//25000,255*daynightcycle//25000))
     # yd -= 1
@@ -65,7 +85,6 @@ def draw(menjansvet, daynightcycle):
     l = max((character.posX-screen.get_width()//2)//32,0)
     r = max((character.posX+screen.get_width()//2)//32,0)
     d +=1
-    print(u,d,l,r)
     cnt1 = -1
     cnt2 = -1
     if menjansvet:
@@ -79,30 +98,146 @@ def draw(menjansvet, daynightcycle):
                 world[21][100] = 1
                 imp = Block_Dict[world[y][x]]["texture"]    
                 screen.blit(imp,(cnt2*32,cnt1 *32))
-        
-                        
-                
-                
-                
     pg.draw.rect(screen, "red", (screen.get_width()//2-32, screen.get_height()//2-15            ,character.W, character.H))
-    pg.display.flip()
+
+
+    #-----INVENTORY-----#
+    if slot < 1:
+        slot = 9
+    if slot > 9:
+        slot = 1
+    pg.draw.rect(screen, "Black", (XX - 25,  H - 150, 670, 110))
+    if (slot == 1):
+        pg.draw.rect(screen, "Gold", (XX - 5,  H - 130, 70, 70))
+    elif (slot == 2):
+        pg.draw.rect(screen, "Gold", (XX + 70 - 5,  H - 130, 70, 70))
+    elif (slot == 3):
+        pg.draw.rect(screen, "Gold", (XX + 70 * 2 - 5,  H - 130, 70, 70))
+    elif (slot == 4):
+        pg.draw.rect(screen, "Gold", (XX + 70 * 3 - 5,  H - 130, 70, 70))
+    elif (slot == 5):
+        pg.draw.rect(screen, "Gold", (XX + 70 * 4 - 5,  H - 130, 70, 70))
+    elif (slot == 6):
+        pg.draw.rect(screen, "Gold", (XX + 70 * 5 - 5,  H - 130, 70, 70))
+    elif (slot == 7):
+        pg.draw.rect(screen, "Gold", (XX + 70 * 6 - 5,  H - 130, 70, 70))
+    elif (slot == 8):
+        pg.draw.rect(screen, "Gold", (XX + 70 * 7 - 5,  H - 130, 70, 70))
+    elif (slot == 9):
+        pg.draw.rect(screen, "Gold", (XX + 70 * 8 - 5,  H - 130, 70, 70))
+    pg.draw.rect(screen, "Gray", (XX,  H - 125, 60, 60))
+    pg.draw.rect(screen, "Gray", (XX + 70,  H - 125, 60, 60))
+    pg.draw.rect(screen, "Gray", (XX + 70 * 2,  H - 125, 60, 60))
+    pg.draw.rect(screen, "Gray", (XX + 70 * 3,  H - 125, 60, 60))
+    pg.draw.rect(screen, "Gray", (XX + 70 * 4,  H - 125, 60, 60))
+    pg.draw.rect(screen, "Gray", (XX + 70 * 5,  H - 125, 60, 60))
+    pg.draw.rect(screen, "Gray", (XX + 70 * 6,  H - 125, 60, 60))
+    pg.draw.rect(screen, "Gray", (XX + 70 * 7,  H - 125, 60, 60))
+    pg.draw.rect(screen, "Gray", (XX + 70 * 8,  H - 125, 60, 60))
+    if (L[0] != 0):
+        screen.blit(L[0], (XX + 5,  H - 120))
+        img1 = font1.render(str(int(LB[0])), True, 'Black')
+        if LB[0] < 10:
+            screen.blit(img1, (XX + 40,  H - 95))
+        else:
+            screen.blit(img1, (XX + 30,  H - 95))
+    if (L[1] != 0):
+        screen.blit(L[1], (XX + 75,  H - 120))
+        img1 = font1.render(str(int(LB[1])), True, 'Black')
+        if LB[1] < 10:
+            screen.blit(img1, (XX + 70 + 40,  H - 95))
+        else:
+            screen.blit(img1, (XX + 70 + 30,  H - 95))
+    if (L[2] != 0):
+        screen.blit(L[2], (XX + 70 * 2 + 5,  H - 120))
+        img1 = font1.render(str(int(LB[2])), True, 'Black')
+        if LB[2] < 10:
+            screen.blit(img1, (XX + 70 * 2 + 40,  H - 95))
+        else:
+            screen.blit(img1, (XX + 70 * 2 + 30,  H - 95))
+    if (L[3] != 0):
+        screen.blit(L[3], (XX + 70 * 3 + 5,  H - 120))
+        img1 = font1.render(str(int(LB[3])), True, 'Black')
+        if LB[3] < 10:
+            screen.blit(img1, (XX + 70 * 3 + 40,  H - 95))
+        else:
+            screen.blit(img1, (XX + 70 * 3 + 30,  H - 95))
+    if (L[4] != 0):
+        screen.blit(L[4], (XX + 70 * 4 + 5,  H - 120))
+        img1 = font1.render(str(int(LB[4])), True, 'Black')
+        if LB[4] < 10:
+            screen.blit(img1, (XX + 70 * 4 + 40,  H - 95))
+        else:
+            screen.blit(img1, (XX + 70 * 4 + 30,  H - 95))
+    if (L[5] != 0):
+        screen.blit(L[5], (XX + 70 * 5 + 5,  H - 120))
+        img1 = font1.render(str(int(LB[5])), True, 'Black')
+        if LB[5] < 10:
+            screen.blit(img1, (XX + 70 * 5 + 40,  H - 95))
+        else:
+            screen.blit(img1, (XX + 70 * 5 + 30,  H - 95))
+    if (L[6] != 0):
+        screen.blit(L[6], (XX + 70 * 6 + 5,  H - 120))
+        img1 = font1.render(str(int(LB[6])), True, 'Black')
+        if LB[6] < 10:
+            screen.blit(img1, (XX + 70 * 6 + 40,  H - 95))
+        else:
+            screen.blit(img1, (XX + 70 * 6 + 30,  H - 95))
+    if (L[7] != 0):
+        screen.blit(L[7], (XX + 70 * 7 + 5,  H - 120))
+        img1 = font1.render(str(int(LB[7])), True, 'Black')
+        if LB[7] < 10:
+            screen.blit(img1, (XX + 70 * 7 + 40,  H - 95))
+        else:
+            screen.blit(img1, (XX + 70 * 7 + 30,  H - 95))
+    if (L[8] != 0):
+        screen.blit(L[8], (XX + 70 * 8 + 5,  H - 120))
+        img1 = font1.render(str(int(LB[8])), True, 'Black')
+        if LB[8] < 10:
+            screen.blit(img1, (XX + 70 * 8 + 40,  H - 95))
+        else:
+            screen.blit(img1, (XX + 70 * 8 + 30,  H - 95))
+   #-----INVENTORY-----#
  
 
 
 # EROZIJA
+nesusedni = -1
 for x in range(200):
     counter = 0
+    nesusedni+=1
     for y in range (200):
         if world[y][x] == 1 and counter == 0:
             world[y][x] = 4
             counter = counter+1
+            if(random.randint(1,5) == 1 and nesusedni >5 and x>2 and x < 198 and y>6):
+                world[y-1][x] = 5
+                world[y-2][x] = 5
+                world[y-3][x] = 5
+                world[y-4][x] = 5
+                world[y-5][x] = 5
+                world[y-6][x] = 6
+                world[y-6][x+1] = 6
+                world[y-6][x-1] = 6
+                world[y-5][x-1] = 6
+                world[y-5][x+1] = 6
+                world[y-5][x-2] = 6
+                world[y-5][x+2] = 6
+                world[y-4][x+1] = 6
+                world[y-4][x+2] = 6
+                world[y-4][x-1] = 6
+                world[y-4][x-2] = 6
+                nesusedni = 0
         elif world[y][x] == 1 and counter < 3:
             world[y][x] = 2
             counter = counter +1
+print(world)
 framecounter = 0
 daynightcycle = 0
 draw(True,0)
 while True:
+        if (pg.mouse.get_pressed()[0] == True and pg.mouse.get_pos()[0] >= 15 and pg.mouse.get_pos()[0] <= 280 and pg.mouse.get_pos()[1] >= 155 and pg.mouse.get_pos()[1] <= 185):
+            a = True
         if daynightcycle == 0:
             spusta = False
         framecounter = framecounter%100+1
@@ -117,6 +252,40 @@ while True:
             if event.type == pg.QUIT:
                 pg.quit()
                 sys.exit()
+            if event.type == pg.KEYDOWN and a:
+                if event.key == pg.K_BACKSPACE:
+                    user_text = user_text[:-1]
+                elif event.key == pg.K_RETURN:
+                    poruke.append(user_text)
+                
+                    user_text = ''
+                    a = False
+                else:
+                    user_text += event.unicode
+            if event.type == pg.MOUSEWHEEL:
+                if event.y > 0:
+                    slot += 1
+                if event.y < 0:
+                    slot -= 1
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_1:
+                    slot = 1
+                if event.key == pg.K_2:
+                    slot = 2
+                if event.key == pg.K_3:
+                    slot = 3
+                if event.key == pg.K_4:
+                    slot = 4
+                if event.key == pg.K_5:
+                    slot = 5
+                if event.key == pg.K_6:
+                    slot = 6
+                if event.key == pg.K_7:
+                    slot = 7
+                if event.key == pg.K_8:
+                    slot = 8
+                if event.key == pg.K_9:
+                    slot = 9
         mozeDesno = True
         mozeLevo = True
         if character.isInAir == False:
@@ -172,7 +341,9 @@ while True:
             mozeDesno = False
         if character.posX <= 800:
             mozeLevo = False 
-        
+        if a:
+            mozeLevo = False
+            mozeDesno = False
         if keys[pg.K_a] and mozeLevo and framecounter%8==0:
             character.posX -= 32
         if keys[pg.K_d] and mozeDesno and framecounter%8==0:
@@ -195,5 +366,20 @@ while True:
         
         menjansvet = False
         draw(True,daynightcycle)
-
+        pg.draw.rect(screen, "Black", (0, 0, 300, 190))
+        pg.draw.rect(screen, "Gray", (10, 155, w, 30))
+        text_surface = font.render(user_text, True, (0, 0, 0))
+        text_surface1 = font.render(poruke[-1], True, (255, 255, 255))
+        text_surface2 = font.render(poruke[-2], True, (255, 255, 255))
+        text_surface3 = font.render(poruke[-3], True, (255, 255, 255))
+        text_surface4 = font.render(poruke[-4], True, (255, 255, 255))
+        text_surface5 = font.render(poruke[-5], True, (255, 255, 255))
+        screen.blit(text_surface, (15, 160))
+        screen.blit(text_surface1, (15, 130))
+        screen.blit(text_surface2, (15, 100))
+        screen.blit(text_surface3, (15, 70))
+        screen.blit(text_surface4, (15, 40))
+        screen.blit(text_surface5, (15, 10))
+        w = max(280, text_surface.get_width() + 10)
+        pg.display.update()
         clock.tick(100)
