@@ -51,9 +51,9 @@ Block_Dict = {
     4 :  {"block_name" : "Grass" , "breaking_time" : 60 , "breaking_tool" : "shovel", "hardness" : 1, "texture" : pg.image.load(".\\grass.png").convert() , "walk_sound" : "dirtwalk.ogg", "break_sound" : "dirtbreak.ogg"}
 }
 screen.fill("blue")
-def draw(menjansvet):
-    
-    screen.fill("blue")
+def draw(menjansvet, daynightcycle):
+    print(daynightcycle)
+    screen.fill((0,120*daynightcycle//25000,255*daynightcycle//25000))
     # yd -= 1
     # pg.draw.rect(screen, "white", ground)
     
@@ -96,9 +96,17 @@ for x in range(200):
             world[y][x] = 2
             counter = counter +1
 framecounter = 0
-draw(True)
+daynightcycle = 0
+draw(True,0)
 while True:
+        if daynightcycle == 0:
+            spusta = False
         framecounter = framecounter%100+1
+        if daynightcycle <25000 and not spusta:
+            daynightcycle+=1
+        else:
+            spusta = True
+            daynightcycle -= 1
         # dt = clock.tick(60) / 1000
         character.isInAir = True
         for event in pg.event.get():
@@ -175,6 +183,6 @@ while True:
         #else
         
         menjansvet = False
-        draw(True)
+        draw(True,daynightcycle)
 
-        clock.tick(100)
+        clock.tick(10000)
