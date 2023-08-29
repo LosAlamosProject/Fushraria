@@ -41,9 +41,9 @@ for x, tile in enumerate(world[0]):
     # noise1(x, octaves=1, persistence=0.5, lacunarity=2.0, repeat=1024, base=0.0)
     gen = noise.pnoise1(x * 0.1 + startx, repeat=999999999, persistence=0.1)
     if gen >= 0: 
-        for i in range(int(gen * 10) + 75,200): world[i][x] = 1
+        for i in range(int(gen * 10) + 125,200): world[i][x] = 1
     elif gen < 0: 
-        for i in range(0-int(gen * 10) + 75,200): world[i][x] = 1
+        for i in range(0-int(gen * 10) + 125,200): world[i][x] = 1
 Block_Dict = {
     0 : {"block_name" : "Air" , "breaking_time" : 0 , "breaking_tool" : "null", "hardness" : 1000, "texture" : "null" , "walk_sound" : "null", "break_sound" : "null"},
     2 : {"block_name" : "Dirt" , "breaking_time" : 60 , "breaking_tool" : "shovel", "hardness" : 1, "texture" : pg.image.load(".\\dirt.png").convert() , "walk_sound" : "dirtwalk.ogg", "break_sound" : "dirtbreak.ogg"},
@@ -242,9 +242,11 @@ for x in range(200):
             counter = counter +1
         if y<= screen.get_height()//64:
             world[y][x] = 3
+        if y>= 200- screen.get_height()//64:
+            world[y][x] = 3
 selectedBlock=1
 framecounter = 0
-daynightcycle = 0
+daynightcycle = 25000
 draw(True,0)
 while True:
         if (pg.mouse.get_pressed()[0] == True and pg.mouse.get_pos()[0] >= 15 and pg.mouse.get_pos()[0] <= 280 and pg.mouse.get_pos()[1] >= 155 and pg.mouse.get_pos()[1] <= 185):
