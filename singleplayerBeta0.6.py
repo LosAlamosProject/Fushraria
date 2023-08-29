@@ -62,6 +62,12 @@ w = 280
 font = pg.font.Font(None, 32)
 
 screen.fill("blue")
+charl = pg.image.load(".\\character_l.png")
+charl= pg.transform.scale(charl, (32,86))
+chard = pg.image.load(".\\character_d.png")
+chard= pg.transform.scale(chard, (32,86))
+LastClick = 1
+
 #---INVENTORY-----
 font1 = pg.font.SysFont('Comic Sans MS', 25, bold=pg.font.Font.bold)
 slot = 1
@@ -98,7 +104,10 @@ def draw(menjansvet, daynightcycle):
                 world[21][100] = 1
                 imp = Block_Dict[world[y][x]]["texture"]    
                 screen.blit(imp,(cnt2*32,cnt1 *32))
-    pg.draw.rect(screen, "red", (screen.get_width()//2-32, screen.get_height()//2-16            ,character.W, character.H))
+    if LastClick == 1:
+        screen.blit(chard,(screen.get_width()//2-32, screen.get_height()//2-24, character.W, character.H)) #HARDCODE
+    else:
+        screen.blit(charl,(screen.get_width()//2-32, screen.get_height()//2-24,character.W, character.H)) #HARDCODE
 
 
     #-----INVENTORY-----#
@@ -233,6 +242,7 @@ for x in range(200):
             counter = counter +1
         if y<= screen.get_height()//64:
             world[y][x] = 3
+selectedBlock=1
 framecounter = 0
 daynightcycle = 0
 draw(True,0)
@@ -271,74 +281,88 @@ while True:
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_1:
                     slot = 1
+                    selectedBlock = 1
                 if event.key == pg.K_2:
                     slot = 2
+                    selectedBlock = 2
                 if event.key == pg.K_3:
                     slot = 3
+                    selectedBlock = 4
                 if event.key == pg.K_4:
                     slot = 4
+                    selectedBlock = 5
                 if event.key == pg.K_5:
                     slot = 5
+                    selectedBlock = 6
                 if event.key == pg.K_6:
                     slot = 6
+                    selectedBlock = 0
                 if event.key == pg.K_7:
                     slot = 7
+                    selectedBlock = 0
                 if event.key == pg.K_8:
                     slot = 8
+                    selectedBlock = 0
                 if event.key == pg.K_9:
                     slot = 9
+                    selectedBlock = 0
+                if event.key == pg.K_a:
+                    LastClick = 0
+                if event.key == pg.K_d:
+                    LastClick = 1
             if event.type == pg.MOUSEBUTTONDOWN:
                 menjansvet = True
                 if pg.mouse.get_pressed()[2]:
                     if pg.mouse.get_pos()[0] > displayPX + character.W:
                         if pg.mouse.get_pos()[1] < displayPY and world[int(character.posY-character.H/2-32)//32][(character.posX-character.W//2+32)//32] ==0:
-                            world[int(character.posY-character.H/2-32)//32][(character.posX-character.W//2+32)//32] = 1
+                            world[int(character.posY-character.H/2-32)//32][(character.posX-character.W//2+32)//32] =selectedBlock
                         elif pg.mouse.get_pos()[1]<displayPY+32  and world[int(character.posY-character.H/2)//32][(character.posX-character.W//2+32)//32] ==0: 
-                            world[int(character.posY-character.H/2)//32][(character.posX-character.W//2+32)//32] =1
+                            world[int(character.posY-character.H/2)//32][(character.posX-character.W//2+32)//32] =selectedBlock
                         elif pg.mouse.get_pos()[1]<displayPY+64  and world[int(character.posY-character.H/2+32)//32][(character.posX-character.W//2+32)//32] ==0: 
-                            world[int(character.posY-character.H/2+32)//32][(character.posX-character.W//2+32)//32] =1
+                            world[int(character.posY-character.H/2+32)//32][(character.posX-character.W//2+32)//32] =selectedBlock
                         elif  world[int(character.posY-character.H/2+64)//32][(character.posX-character.W//2+32)//32] ==0: 
-                            world[int(character.posY-character.H/2+64)//32][(character.posX-character.W//2+32)//32] =1
+                            world[int(character.posY-character.H/2+64)//32][(character.posX-character.W//2+32)//32] =selectedBlock
                     elif pg.mouse.get_pos()[0] > displayPX :
                         if pg.mouse.get_pos()[1] < displayPY and world[int(character.posY-character.H/2-32)//32][(character.posX-character.W//2)//32] ==0:
-                            world[int(character.posY-character.H/2-32)//32][(character.posX-character.W//2)//32] = 1
+                            world[int(character.posY-character.H/2-32)//32][(character.posX-character.W//2)//32] = selectedBlock
                 
                         elif  pg.mouse.get_pos()[1] > displayPY+32 and world[int(character.posY-character.H/2+64)//32][(character.posX-character.W//2)//32] ==0: 
-                            world[int(character.posY-character.H/2+64)//32][(character.posX-character.W//2)//32] =1
+                            world[int(character.posY-character.H/2+64)//32][(character.posX-character.W//2)//32] =selectedBlock
                     else: 
                         if pg.mouse.get_pos()[1] < displayPY and world[int(character.posY-character.H/2-32)//32][(character.posX-character.W//2-32)//32] ==0:
-                            world[int(character.posY-character.H/2-32)//32][(character.posX-character.W//2-32)//32] = 1
+                            world[int(character.posY-character.H/2-32)//32][(character.posX-character.W//2-32)//32] = selectedBlock
                         elif pg.mouse.get_pos()[1]<displayPY+32  and world[int(character.posY-character.H/2)//32][(character.posX-character.W//2-32)//32] ==0: 
-                            world[int(character.posY-character.H/2)//32][(character.posX-character.W//2-32)//32] =1
+                            world[int(character.posY-character.H/2)//32][(character.posX-character.W//2-32)//32] =selectedBlock
                         elif pg.mouse.get_pos()[1]<displayPY+64  and world[int(character.posY-character.H/2+32)//32][(character.posX-character.W//2-32)//32] ==0: 
-                            world[int(character.posY-character.H/2+32)//32][(character.posX-character.W//2-32)//32] =1
+                            world[int(character.posY-character.H/2+32)//32][(character.posX-character.W//2-32)//32] =selectedBlock
                         elif  world[int(character.posY-character.H/2+64)//32][(character.posX-character.W//2-32)//32] ==0: 
-                            world[int(character.posY-character.H/2+64)//32][(character.posX-character.W//2-32)//32] =1
+                            world[int(character.posY-character.H/2+64)//32][(character.posX-character.W//2-32)//32] =selectedBlock 
                 if pg.mouse.get_pressed()[0]:
                     if pg.mouse.get_pos()[0] > displayPX + character.W:
-                        if pg.mouse.get_pos()[1] < displayPY :
+                        if pg.mouse.get_pos()[1] < displayPY and world[int(character.posY-character.H/2-32)//32][(character.posX-character.W//2+32)//32] !=3:
                             world[int(character.posY-character.H/2-32)//32][(character.posX-character.W//2+32)//32] = 0
-                        elif pg.mouse.get_pos()[1]<displayPY+32  : 
+                        elif pg.mouse.get_pos()[1]<displayPY+32  and world[int(character.posY-character.H/2)//32][(character.posX-character.W//2+32)//32] !=3: 
                             world[int(character.posY-character.H/2)//32][(character.posX-character.W//2+32)//32] =0
-                        elif pg.mouse.get_pos()[1]<displayPY+64  : 
+                        elif pg.mouse.get_pos()[1]<displayPY+64  and world[int(character.posY-character.H/2+32)//32][(character.posX-character.W//2+32)//32] !=3: 
                             world[int(character.posY-character.H/2+32)//32][(character.posX-character.W//2+32)//32] =0
-                        elif  world[int(character.posY-character.H/2+64)//32][(character.posX-character.W//2+32)//32] ==0: 
+                        elif  world[int(character.posY-character.H/2+64)//32][(character.posX-character.W//2+32)//32] !=3: 
                             world[int(character.posY-character.H/2+64)//32][(character.posX-character.W//2+32)//32] =0
                     elif pg.mouse.get_pos()[0] > displayPX :
-                        if pg.mouse.get_pos()[1] < displayPY :
+                        if pg.mouse.get_pos()[1] < displayPY and world[int(character.posY-character.H/2-32)//32][(character.posX-character.W//2)//32] !=3:
                             world[int(character.posY-character.H/2-32)//32][(character.posX-character.W//2)//32] = 0
                 
-                        elif  pg.mouse.get_pos()[1] > displayPY+32 : 
+                        elif  pg.mouse.get_pos()[1] > displayPY+32 and world[int(character.posY-character.H/2+64)//32][(character.posX-character.W//2)//32] !=3: 
                             world[int(character.posY-character.H/2+64)//32][(character.posX-character.W//2)//32] =0
                     else: 
-                        if pg.mouse.get_pos()[1] < displayPY :
+                        if pg.mouse.get_pos()[1] < displayPY and world[int(character.posY-character.H/2-32)//32][(character.posX-character.W//2-32)//32] !=3:
                             world[int(character.posY-character.H/2-32)//32][(character.posX-character.W//2-32)//32] = 0
-                        elif pg.mouse.get_pos()[1]<displayPY+32  : 
+                        elif pg.mouse.get_pos()[1]<displayPY+32  and world[int(character.posY-character.H/2)//32][(character.posX-character.W//2-32)//32] !=3: 
                             world[int(character.posY-character.H/2)//32][(character.posX-character.W//2-32)//32] =0
-                        elif pg.mouse.get_pos()[1]<displayPY+64  : 
+                        elif pg.mouse.get_pos()[1]<displayPY+64  and world[int(character.posY-character.H/2+32)//32][(character.posX-character.W//2-32)//32] !=3: 
                             world[int(character.posY-character.H/2+32)//32][(character.posX-character.W//2-32)//32] =0
-                        elif  world[int(character.posY-character.H/2+64)//32][(character.posX-character.W//2-32)//32] ==0: 
+                        elif  world[int(character.posY-character.H/2+64)//32][(character.posX-character.W//2-32)//32] !=3: 
                             world[int(character.posY-character.H/2+64)//32][(character.posX-character.W//2-32)//32] =0
+            
         mozeDesno = True
         mozeLevo = True
         if character.isInAir == False:
