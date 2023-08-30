@@ -25,6 +25,7 @@ class Character:
 pg.init()
 
 screen = pg.display.set_mode((1280, 800))
+DISPLAYSURF = pg.display.set_mode((1280,800),pg.FULLSCREEN)
 clock = pg.time.Clock()
     # Create the character
 character = Character(1000, 450, 0, 0, 100, 100, 10, 10, 32, 64, "playerL.png", "playerD.png", True, False, False, False, False, 0)
