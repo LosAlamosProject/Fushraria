@@ -24,8 +24,12 @@ class Character:
     self.o2 = o2
 pg.init()
 
-screen = pg.display.set_mode((1280, 800))
-DISPLAYSURF = pg.display.set_mode((1280,800),pg.FULLSCREEN)
+w=pg.display.Info().current_w
+h=pg.display.Info().current_h
+
+screen = pg.display.set_mode((w,h))
+
+DISPLAYSURF = pg.display.set_mode((w,h),pg.FULLSCREEN)
 clock = pg.time.Clock()
     # Create the character
 character = Character(1000, 450, 0, 0, 100, 100, 10, 10, 32, 64, "playerL.png", "playerD.png", True, False, False, False, False, 0)
@@ -49,14 +53,16 @@ Block_Dict = {
     0 : {"block_name" : "Air" , "breaking_time" : 0 , "breaking_tool" : "null", "hardness" : 1000, "texture" : "null" , "walk_sound" : "null", "break_sound" : "null"},
     2 : {"block_name" : "Dirt" , "breaking_time" : 60 , "breaking_tool" : "shovel", "hardness" : 1, "texture" : pg.image.load(".\\dirt.png").convert() , "walk_sound" : "dirtwalk.ogg", "break_sound" : "dirtbreak.ogg"},
     1 : {"block_name" : "Stone" , "breaking_time" : 180 , "breaking_tool" : "pickaxe", "hardness" : 1, "texture" : pg.image.load(".\\stone.png").convert() , "walk_sound" : "stonewalk.ogg", "break_sound" : "stonebreak.ogg"},
-    3 : {"block_name" : "Bedrok" , "breaking_time" : 0 , "breaking_tool" : "null", "hardness" : 6969, "texture" : pg.image.load(".\\Bedrock.png").convert() , "walk_sound" : "bedrock.ogg", "break_sound" : "null"},
-    4 :  {"block_name" : "Grass" , "breaking_time" : 60 , "breaking_tool" : "shovel", "hardness" : 1, "texture" : pg.image.load(".\\grass.png").convert() , "walk_sound" : "dirtwalk.ogg", "break_sound" : "dirtbreak.ogg",},
-    5: {"block_name" : "Wood" , "breaking_time" : 120 , "breaking_tool" : "axe", "hardness" : 1, "texture" : pg.image.load(".\\wood.png").convert(), "walk_sound" : "woodwalk.ogg", "break_sound" : "woodbreak.ogg"},
-    6: {"block_name" : "Leaves" , "breaking_time" : 30 , "breaking_tool" : "null", "hardness" : 1, "texture" :pg.image.load(".\\leaves.png").convert() , "walk_sound" : "leaveswalk.ogg", "break_sound" : "leavesbreak.ogg"},
-    7: {"block_name" : "Glass" , "breaking_time" : 30 , "breaking_tool" : "null", "hardness" : 1, "texture" :pg.image.load(".\\ice.png").convert() , "walk_sound" : "glasswalk.ogg", "break_sound" : "glassbreak.ogg"},
-    8: {"block_name" : "Bricks" , "breaking_time" : 30 , "breaking_tool" : "pickaxe", "hardness" : 1, "texture" :pg.image.load(".\\bricks.png").convert() , "walk_sound" : "brickswalk.ogg", "break_sound" : "bricksbreak.ogg"},
-    9: {"block_name" : "Planks" , "breaking_time" : 30 , "breaking_tool" : "axe", "hardness" : 1, "texture" :pg.image.load(".\\planks.png").convert() , "walk_sound" : "plankswalk.ogg", "break_sound" : "planksbreak.ogg"},
-    10: {"block_name" : "Gravel" , "breaking_time" : 30 , "breaking_tool" : "shovel", "hardness" : 1, "texture" :pg.image.load(".\\Gravel.png").convert() , "walk_sound" : "gravelwalk.ogg", "break_sound" : "gravelbreak.ogg"}}
+    99 : {"block_name" : "Bedrok" , "breaking_time" : 0 , "breaking_tool" : "null", "hardness" : 6969, "texture" : pg.image.load(".\\Bedrock.png").convert() , "walk_sound" : "bedrock.ogg", "break_sound" : "null"},
+    3 :  {"block_name" : "Grass" , "breaking_time" : 60 , "breaking_tool" : "shovel", "hardness" : 1, "texture" : pg.image.load(".\\grass.png").convert() , "walk_sound" : "dirtwalk.ogg", "break_sound" : "dirtbreak.ogg",},
+    4 : {"block_name" : "Wood" , "breaking_time" : 120 , "breaking_tool" : "axe", "hardness" : 1, "texture" : pg.image.load(".\\wood.png").convert(), "walk_sound" : "woodwalk.ogg", "break_sound" : "woodbreak.ogg"},
+    5 : {"block_name" : "Leaves" , "breaking_time" : 30 , "breaking_tool" : "null", "hardness" : 1, "texture" :pg.image.load(".\\leaves.png").convert() , "walk_sound" : "leaveswalk.ogg", "break_sound" : "leavesbreak.ogg"},
+    6 : {"block_name" : "Glass" , "breaking_time" : 30 , "breaking_tool" : "null", "hardness" : 1, "texture" :pg.image.load(".\\ice.png").convert() , "walk_sound" : "glasswalk.ogg", "break_sound" : "glassbreak.ogg"},
+    7 : {"block_name" : "Bricks" , "breaking_time" : 30 , "breaking_tool" : "pickaxe", "hardness" : 1, "texture" :pg.image.load(".\\bricks.png").convert() , "walk_sound" : "brickswalk.ogg", "break_sound" : "bricksbreak.ogg"},
+    8 : {"block_name" : "Planks" , "breaking_time" : 30 , "breaking_tool" : "axe", "hardness" : 1, "texture" :pg.image.load(".\\planks.png").convert() , "walk_sound" : "plankswalk.ogg", "break_sound" : "planksbreak.ogg"},
+    9 : {"block_name" : "Gravel" , "breaking_time" : 30 , "breaking_tool" : "shovel", "hardness" : 1, "texture" :pg.image.load(".\\Gravel.png").convert() , "walk_sound" : "gravelwalk.ogg", "break_sound" : "gravelbreak.ogg"},
+    10 :{"block_name" : "Uranium" , "breaking_time" : 360 , "breaking_tool" : "pickaxe", "hardness" : 1, "texture" :pg.image.load(".\\Uranium.png").convert() , "walk_sound" : "walk_sound", "break_sound" : "stonebreak.ogg"}
+}
 
 
 
@@ -78,7 +84,7 @@ font1 = pg.font.SysFont('Comic Sans MS', 25, bold=pg.font.Font.bold)
 slot = 1
 H = 850
 XX = (1280 - 620) / 2
-L = [Block_Dict[1]["texture"], Block_Dict[2]["texture"], Block_Dict[4]["texture"], Block_Dict[5]["texture"], Block_Dict[6]["texture"], Block_Dict[7]["texture"],Block_Dict[8]["texture"],Block_Dict[9]["texture"], Block_Dict[10]["texture"]]
+L = [Block_Dict[1]["texture"], Block_Dict[2]["texture"], Block_Dict[3]["texture"], Block_Dict[4]["texture"], Block_Dict[5]["texture"], Block_Dict[6]["texture"],Block_Dict[7]["texture"],Block_Dict[8]["texture"], Block_Dict[9]["texture"]]
 LB = [69,69,69,69,69,69,69,69,69]
 
 
@@ -110,9 +116,9 @@ def draw(menjansvet, daynightcycle):
                 imp = Block_Dict[world[y][x]]["texture"]    
                 screen.blit(imp,(cnt2*32,cnt1 *32))
     if LastClick == 1:
-        screen.blit(chard,(screen.get_width()//2-32, screen.get_height()//2-24, character.W, character.H)) #HARDCODE
+        screen.blit(chard,(screen.get_width()//2-32, screen.get_height()//2-16, character.W, character.H)) #HARDCODE
     else:
-        screen.blit(charl,(screen.get_width()//2-32, screen.get_height()//2-24,character.W, character.H)) #HARDCODE
+        screen.blit(charl,(screen.get_width()//2-32, screen.get_height()//2-16,character.W, character.H)) #HARDCODE
 
 
     #-----INVENTORY-----#
@@ -222,33 +228,35 @@ for x in range(200):
     nesusedni+=1
     for y in range (200):
         if world[y][x] == 1 and counter == 0:
-            world[y][x] = 4
+            world[y][x] = 3
             counter = counter+1
             if(random.randint(1,5) == 1 and nesusedni >5 and x>2 and x < 198 and y>6):
-                world[y-1][x] = 5
-                world[y-2][x] = 5
-                world[y-3][x] = 5
-                world[y-4][x] = 5
-                world[y-5][x] = 5
-                world[y-6][x] = 6
-                world[y-6][x+1] = 6
-                world[y-6][x-1] = 6
-                world[y-5][x-1] = 6
-                world[y-5][x+1] = 6
-                world[y-5][x-2] = 6
-                world[y-5][x+2] = 6
-                world[y-4][x+1] = 6
-                world[y-4][x+2] = 6
-                world[y-4][x-1] = 6
-                world[y-4][x-2] = 6
+                world[y-1][x] = 4
+                world[y-2][x] = 4
+                world[y-3][x] = 4
+                world[y-4][x] = 4
+                world[y-5][x] = 4
+                world[y-6][x] = 5
+                world[y-6][x+1] = 5
+                world[y-6][x-1] = 5
+                world[y-5][x-1] = 5
+                world[y-5][x+1] = 5
+                world[y-5][x-2] = 5
+                world[y-5][x+2] = 5
+                world[y-4][x+1] = 5
+                world[y-4][x+2] = 5
+                world[y-4][x-1] = 5
+                world[y-4][x-2] = 5
                 nesusedni = 0
         elif world[y][x] == 1 and counter < 3:
             world[y][x] = 2
             counter = counter +1
+        if random.randint(1,int(10000/(1+y/50)))==1 and world[y][x]==1:
+                  world[y][x]=10
         if y<= screen.get_height()//64:
-            world[y][x] = 3
+            world[y][x] =99
         if y>= 190- screen.get_height()//64:
-            world[y][x] = 3
+            world[y][x] = 99
 selectedBlock=1
 framecounter = 0
 daynightcycle = 25000
@@ -256,6 +264,8 @@ draw(True,0)
 while True:
         if (pg.mouse.get_pressed()[0] == True and pg.mouse.get_pos()[0] >= 15 and pg.mouse.get_pos()[0] <= 280 and pg.mouse.get_pos()[1] >= 155 and pg.mouse.get_pos()[1] <= 185):
             a = True
+        elif pg.mouse.get_pressed()[0]:
+            a=False
         if daynightcycle == 0:
             spusta = False
         framecounter = framecounter%100+1
@@ -275,7 +285,8 @@ while True:
                     user_text = user_text[:-1]
                 elif event.key == pg.K_RETURN:
                     poruke.append(user_text)
-                
+                    if user_text == 'oppenheimer refference' and world[character.posY//32+1][character.posX//32-1]==10:
+                      character.posY=250*32
                     user_text = ''
                     a = False
                 else:
@@ -296,32 +307,30 @@ while True:
                     selectedBlock = 2
                 if event.key == pg.K_3:
                     slot = 3
-                    selectedBlock = 4
+                    selectedBlock = 3
                 if event.key == pg.K_4:
                     slot = 4
-                    selectedBlock = 5
+                    selectedBlock = 4
                 if event.key == pg.K_5:
                     slot = 5
-                    selectedBlock = 6
+                    selectedBlock = 5
                 if event.key == pg.K_6:
                     slot = 6
-                    selectedBlock = 7
+                    selectedBlock = 6
                 if event.key == pg.K_7:
                     slot = 7
-                    selectedBlock = 8
+                    selectedBlock = 7
                 if event.key == pg.K_8:
                     slot = 8
-                    selectedBlock = 9
+                    selectedBlock = 8
                 if event.key == pg.K_9:
                     slot = 9
-                    selectedBlock = 10
+                    selectedBlock = 9
                 if event.key == pg.K_a:
                     LastClick = 0
                 if event.key == pg.K_d:
                     LastClick = 1
-            
-                
-            
+
         mozeDesno = True
         mozeLevo = True
         if character.isInAir == False:
@@ -401,28 +410,28 @@ while True:
                             world[int(character.posY-character.H/2+64)//32][(character.posX-character.W//2-32)//32] =selectedBlock 
         if pg.mouse.get_pressed()[0]:
                     if pg.mouse.get_pos()[0] > displayPX + character.W:
-                        if pg.mouse.get_pos()[1] < displayPY and world[int(character.posY-character.H/2-32)//32][(character.posX-character.W//2+32)//32] !=3:
+                        if pg.mouse.get_pos()[1] < displayPY and world[int(character.posY-character.H/2-3)//32][(character.posX-character.W//2+32)//32] !=99 and not a:
                             world[int(character.posY-character.H/2-32)//32][(character.posX-character.W//2+32)//32] = 0
-                        elif pg.mouse.get_pos()[1]<displayPY+32  and world[int(character.posY-character.H/2)//32][(character.posX-character.W//2+32)//32] !=3: 
+                        elif pg.mouse.get_pos()[1]<displayPY+32  and world[int(character.posY-character.H/2)//32][(character.posX-character.W//2+32)//32] !=99 and not a: 
                             world[int(character.posY-character.H/2)//32][(character.posX-character.W//2+32)//32] =0
-                        elif pg.mouse.get_pos()[1]<displayPY+64  and world[int(character.posY-character.H/2+32)//32][(character.posX-character.W//2+32)//32] !=3: 
+                        elif pg.mouse.get_pos()[1]<displayPY+64  and world[int(character.posY-character.H/2+32)//32][(character.posX-character.W//2+32)//32] !=99 and not a: 
                             world[int(character.posY-character.H/2+32)//32][(character.posX-character.W//2+32)//32] =0
-                        elif  world[int(character.posY-character.H/2+64)//32][(character.posX-character.W//2+32)//32] !=3: 
+                        elif  world[int(character.posY-character.H/2+64)//32][(character.posX-character.W//2+32)//32] !=99 and not a: 
                             world[int(character.posY-character.H/2+64)//32][(character.posX-character.W//2+32)//32] =0
                     elif pg.mouse.get_pos()[0] > displayPX :
-                        if pg.mouse.get_pos()[1] < displayPY and world[int(character.posY-character.H/2-32)//32][(character.posX-character.W//2)//32] !=3:
+                        if pg.mouse.get_pos()[1] < displayPY and world[int(character.posY-character.H/2-32)//32][(character.posX-character.W//2)//32] !=99 and not a:
                             world[int(character.posY-character.H/2-32)//32][(character.posX-character.W//2)//32] = 0
                 
-                        elif  pg.mouse.get_pos()[1] > displayPY+32 and world[int(character.posY-character.H/2+64)//32][(character.posX-character.W//2)//32] !=3: 
+                        elif  pg.mouse.get_pos()[1] > displayPY+32 and world[int(character.posY-character.H/2+64)//32][(character.posX-character.W//2)//32] !=99 and not a: 
                             world[int(character.posY-character.H/2+64)//32][(character.posX-character.W//2)//32] =0
                     else: 
-                        if pg.mouse.get_pos()[1] < displayPY and world[int(character.posY-character.H/2-32)//32][(character.posX-character.W//2-32)//32] !=3:
+                        if pg.mouse.get_pos()[1] < displayPY and world[int(character.posY-character.H/2-32)//32][(character.posX-character.W//2-32)//32] !=99 and not a:
                             world[int(character.posY-character.H/2-32)//32][(character.posX-character.W//2-32)//32] = 0
-                        elif pg.mouse.get_pos()[1]<displayPY+32  and world[int(character.posY-character.H/2)//32][(character.posX-character.W//2-32)//32] !=3: 
+                        elif pg.mouse.get_pos()[1]<displayPY+32  and world[int(character.posY-character.H/2)//32][(character.posX-character.W//2-32)//32] !=99 and not a: 
                             world[int(character.posY-character.H/2)//32][(character.posX-character.W//2-32)//32] =0
-                        elif pg.mouse.get_pos()[1]<displayPY+64  and world[int(character.posY-character.H/2+32)//32][(character.posX-character.W//2-32)//32] !=3: 
+                        elif pg.mouse.get_pos()[1]<displayPY+64  and world[int(character.posY-character.H/2+32)//32][(character.posX-character.W//2-32)//32] !=99 and not a: 
                             world[int(character.posY-character.H/2+32)//32][(character.posX-character.W//2-32)//32] =0
-                        elif  world[int(character.posY-character.H/2+64)//32][(character.posX-character.W//2-32)//32] !=3: 
+                        elif  world[int(character.posY-character.H/2+64)//32][(character.posX-character.W//2-32)//32] !=99 and not a: 
                             world[int(character.posY-character.H/2+64)//32][(character.posX-character.W//2-32)//32] =0
         if character.posX>= 5600:
             mozeDesno = False
@@ -437,7 +446,7 @@ while True:
             character.posX += 32   
         if not character.isInAir:
             character.vY = 0
-        if keys[pg.K_SPACE] and character.isInAir == False:
+        if keys[pg.K_SPACE] and character.isInAir == False and not a:
             character.vY -= 16
             character.isInAir = True
         if character.isInAir :
