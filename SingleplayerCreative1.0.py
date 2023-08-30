@@ -24,12 +24,9 @@ class Character:
     self.o2 = o2
 pg.init()
 
-w=pg.display.Info().current_w
-h=pg.display.Info().current_h
+screen = pg.display.set_mode((1280,800))
 
-screen = pg.display.set_mode((w,h))
-
-DISPLAYSURF = pg.display.set_mode((w,h),pg.FULLSCREEN)
+DISPLAYSURF = pg.display.set_mode((1280,800),pg.FULLSCREEN)
 clock = pg.time.Clock()
     # Create the character
 character = Character(1000, 450, 0, 0, 100, 100, 10, 10, 32, 64, "playerL.png", "playerD.png", True, False, False, False, False, 0)
@@ -116,9 +113,9 @@ def draw(menjansvet, daynightcycle):
                 imp = Block_Dict[world[y][x]]["texture"]    
                 screen.blit(imp,(cnt2*32,cnt1 *32))
     if LastClick == 1:
-        screen.blit(chard,(screen.get_width()//2-32, screen.get_height()//2-16, character.W, character.H)) #HARDCODE
+        screen.blit(chard,(screen.get_width()//2-32, screen.get_height()//2-24, character.W, character.H)) #HARDCODE
     else:
-        screen.blit(charl,(screen.get_width()//2-32, screen.get_height()//2-16,character.W, character.H)) #HARDCODE
+        screen.blit(charl,(screen.get_width()//2-32, screen.get_height()//2-24,character.W, character.H)) #HARDCODE
 
 
     #-----INVENTORY-----#
