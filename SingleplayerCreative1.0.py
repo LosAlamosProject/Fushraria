@@ -282,9 +282,11 @@ while True:
                     user_text += event.unicode
             if event.type == pg.MOUSEWHEEL:
                 if event.y > 0:
-                    slot += 1
-                if event.y < 0:
                     slot -= 1
+                    selectedBlock -= 1
+                if event.y < 0:
+                    slot += 1
+                    selectedBlock += 1
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_1:
                     slot = 1
