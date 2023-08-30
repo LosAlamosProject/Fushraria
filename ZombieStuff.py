@@ -35,6 +35,8 @@ t = 10
 LZ = []
 LZPX = []
 LZPY = []
+BZ1 = 0
+BZ2 = 0
 
 while running:
     for event in pg.event.get():
@@ -61,14 +63,23 @@ while running:
         ZTL -= t
     
     for i in range(len(LZ)):
-        if LZ[i].zomb_x < posX and LZ[i].zomb_x + 4 not in LZPX:
-            LZ[i].zomb_x += 4
-        if LZ[i].zomb_x > posX and LZ[i].zomb_x - 4 not in LZPX:
-            LZ[i].zomb_x -= 4
+        BZ1 = 0
+        BZ2 = 0
+        if LZ[i].zomb_x < posX:
+            for j in range(len(LZ)):
+                if LZ[i].zomb_x > LZPX[j] - zomb_w and LZPX[j] > LZ[i].zomb_x:
+                    BZ1 = 1
+            if BZ1 == 0:
+                LZ[i].zomb_x += 4
+        if LZ[i].zomb_x > posX:
+            for j in range(len(LZ)):
+                if LZ[i].zomb_x < LZPX[j] + zomb_w and LZPX[j] < LZ[i].zomb_x:
+                    BZ2 = 1
+            if BZ2 == 0:
+                LZ[i].zomb_x -= 4
         LZPX[i] = LZ[i].zomb_x
     
     for i in range(len(LZ)):
-        #pg.draw.rect(screen, "red", (LZ[i].zomb_x, LZ[i].zomb_y, LZ[i].zomb_w, LZ[i].zomb_h))
         LZ[i].ZombieDraw()
     print(LZPX)
     t = clock.tick(100)
