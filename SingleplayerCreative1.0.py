@@ -246,7 +246,7 @@ for x in range(200):
             counter = counter +1
         if y<= screen.get_height()//64:
             world[y][x] = 3
-        if y>= 200- screen.get_height()//64:
+        if y>= 190- screen.get_height()//64:
             world[y][x] = 3
 selectedBlock=1
 framecounter = 0
