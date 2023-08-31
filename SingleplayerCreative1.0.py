@@ -1,6 +1,7 @@
 import pygame as pg
 import sys, random
 import noise
+from math import*
 
 class Character:
   def __init__(self, posX, posY, vX, vY ,health, stamina, defence, dmg, W, H, skinL, skinD , isInAir, isOnIce, isInWater, isFlying, isSing, o2):
@@ -36,21 +37,21 @@ ground = pg.Rect(0, 500, 800, 100)
  
 yd = 0
 
-world = [[0 for i in range(200)] for i in range(200)]
+xr=1000+23
+yr=1000+23
+world = [[0 for i in range(xr)] for i in range(yr)]
 
 startx = random.randint(1,10000)
-for x, tile in enumerate(world[0]):
-    # noise1(x, octaves=1, persistence=0.5, lacunarity=2.0, repeat=1024, base=0.0)
-    gen = noise.pnoise1(x * 0.1 + startx, repeat=999999999, persistence=0.1)
-    if gen >= 0: 
-        for i in range(int(gen * 10) + 125,200): world[i][x] = 1
-    elif gen < 0: 
-        for i in range(0-int(gen * 10) + 125,200): world[i][x] = 1
+for x in range(xr):
+    gen = noise.pnoise1(x*0.1 + startx, repeat=999999999, persistence=0.1)
+    for i in range(abs(int(gen * 10) + 125),yr):
+        world[i][x] = 1
+
+
 Block_Dict = {
     0 : {"block_name" : "Air" , "breaking_time" : 0 , "breaking_tool" : "null", "hardness" : 1000, "texture" : "null" , "walk_sound" : "null", "break_sound" : "null"},
-    2 : {"block_name" : "Dirt" , "breaking_time" : 60 , "breaking_tool" : "shovel", "hardness" : 1, "texture" : pg.image.load(".\\dirt.png").convert() , "walk_sound" : "dirtwalk.ogg", "break_sound" : "dirtbreak.ogg"},
     1 : {"block_name" : "Stone" , "breaking_time" : 180 , "breaking_tool" : "pickaxe", "hardness" : 1, "texture" : pg.image.load(".\\stone.png").convert() , "walk_sound" : "stonewalk.ogg", "break_sound" : "stonebreak.ogg"},
-    99 : {"block_name" : "Bedrok" , "breaking_time" : 0 , "breaking_tool" : "null", "hardness" : 6969, "texture" : pg.image.load(".\\Bedrock.png").convert() , "walk_sound" : "bedrock.ogg", "break_sound" : "null"},
+    2 : {"block_name" : "Dirt" , "breaking_time" : 60 , "breaking_tool" : "shovel", "hardness" : 1, "texture" : pg.image.load(".\\dirt.png").convert() , "walk_sound" : "dirtwalk.ogg", "break_sound" : "dirtbreak.ogg"},
     3 :  {"block_name" : "Grass" , "breaking_time" : 60 , "breaking_tool" : "shovel", "hardness" : 1, "texture" : pg.image.load(".\\grass.png").convert() , "walk_sound" : "dirtwalk.ogg", "break_sound" : "dirtbreak.ogg",},
     4 : {"block_name" : "Wood" , "breaking_time" : 120 , "breaking_tool" : "axe", "hardness" : 1, "texture" : pg.image.load(".\\wood.png").convert(), "walk_sound" : "woodwalk.ogg", "break_sound" : "woodbreak.ogg"},
     5 : {"block_name" : "Leaves" , "breaking_time" : 30 , "breaking_tool" : "null", "hardness" : 1, "texture" :pg.image.load(".\\leaves.png").convert() , "walk_sound" : "leaveswalk.ogg", "break_sound" : "leavesbreak.ogg"},
@@ -58,7 +59,12 @@ Block_Dict = {
     7 : {"block_name" : "Bricks" , "breaking_time" : 30 , "breaking_tool" : "pickaxe", "hardness" : 1, "texture" :pg.image.load(".\\bricks.png").convert() , "walk_sound" : "brickswalk.ogg", "break_sound" : "bricksbreak.ogg"},
     8 : {"block_name" : "Planks" , "breaking_time" : 30 , "breaking_tool" : "axe", "hardness" : 1, "texture" :pg.image.load(".\\planks.png").convert() , "walk_sound" : "plankswalk.ogg", "break_sound" : "planksbreak.ogg"},
     9 : {"block_name" : "Gravel" , "breaking_time" : 30 , "breaking_tool" : "shovel", "hardness" : 1, "texture" :pg.image.load(".\\Gravel.png").convert() , "walk_sound" : "gravelwalk.ogg", "break_sound" : "gravelbreak.ogg"},
-    10 :{"block_name" : "Uranium" , "breaking_time" : 360 , "breaking_tool" : "pickaxe", "hardness" : 1, "texture" :pg.image.load(".\\Uranium.png").convert() , "walk_sound" : "walk_sound", "break_sound" : "stonebreak.ogg"}
+    10 :{"block_name" : "Uranium" , "breaking_time" : 360 , "breaking_tool" : "pickaxe", "hardness" : 1, "texture" :pg.image.load(".\\Uranium.png").convert() , "walk_sound" : "walk_sound", "break_sound" : "stonebreak.ogg"},
+    11 :{"block_name" : "Coal" , "breaking_time" : 150 , "breaking_tool" : "pickaxe", "hardness" : 1, "texture" :pg.image.load(".\\Coal.png").convert() , "walk_sound" : "walk_sound", "break_sound" : "stonebreak.ogg"},
+    12 :{"block_name" : "Iron" , "breaking_time" : 180 , "breaking_tool" : "pickaxe", "hardness" : 1, "texture" :pg.image.load(".\\Iron.png").convert() , "walk_sound" : "walk_sound", "break_sound" : "stonebreak.ogg"},
+    97 : {"block_name" : "Stone1" , "breaking_time" : 0 , "breaking_tool" : "null", "hardness" : 1, "texture" : pg.image.load(".\\Stone1.png").convert() , "walk_sound" : "walk_sound", "break_sound" : "stonebreak.ogg"},
+    98 : {"block_name" : "Stone2" , "breaking_time" : 0 , "breaking_tool" : "null", "hardness" : 1, "texture" : pg.image.load(".\\Stone2.png").convert() , "walk_sound" : "walk_sound", "break_sound" : "stonebreak.ogg"},
+    99 : {"block_name" : "Bedrok" , "breaking_time" : 0 , "breaking_tool" : "null", "hardness" : 6969, "texture" : pg.image.load(".\\Bedrock.png").convert() , "walk_sound" : "bedrock.ogg", "break_sound" : "null"}
 }
 
 
@@ -84,6 +90,11 @@ XX = (1280 - 620) / 2
 L = [Block_Dict[1]["texture"], Block_Dict[2]["texture"], Block_Dict[3]["texture"], Block_Dict[4]["texture"], Block_Dict[5]["texture"], Block_Dict[6]["texture"],Block_Dict[7]["texture"],Block_Dict[8]["texture"], Block_Dict[9]["texture"]]
 LB = [69,69,69,69,69,69,69,69,69]
 
+#---DISTANCE FOR LIGHTING---
+distance=0
+def disc(a,b):
+    global distance
+    distance=sqrt((character.posX//32-a-1)**2+(character.posY//32-b-1)**2)
 
 #-----INVENTORY-----#
 #DRAW
@@ -111,6 +122,13 @@ def draw(menjansvet, daynightcycle):
                     continue
                 world[21][100] = 1
                 imp = Block_Dict[world[y][x]]["texture"]    
+                disc(x,y)
+                if distance>3:
+                    if world[y][x]==1 or world[y][x]==10 or world[y][x]==11 or world[y][x]==12:
+                        imp = Block_Dict[98]["texture"]
+                elif distance>2:
+                    if world[y][x]==1:
+                        imp = Block_Dict[97]["texture"]    
                 screen.blit(imp,(cnt2*32,cnt1 *32))
     if LastClick == 1:
         screen.blit(chard,(screen.get_width()//2-32, screen.get_height()//2-24, character.W, character.H)) #HARDCODE
@@ -220,14 +238,14 @@ def draw(menjansvet, daynightcycle):
 displayPX, displayPY = screen.get_width()//2-32, screen.get_height()//2-16            
 # EROZIJA
 nesusedni = -1
-for x in range(200):
+for x in range(xr):
     counter = 0
     nesusedni+=1
-    for y in range (200):
+    for y in range (yr):
         if world[y][x] == 1 and counter == 0:
             world[y][x] = 3
             counter = counter+1
-            if(random.randint(1,5) == 1 and nesusedni >5 and x>2 and x < 198 and y>6):
+            if(random.randint(1,5) == 1 and nesusedni >5 and x>2 and x < xr-25 and y>6):
                 world[y-1][x] = 4
                 world[y-2][x] = 4
                 world[y-3][x] = 4
@@ -248,11 +266,19 @@ for x in range(200):
         elif world[y][x] == 1 and counter < 3:
             world[y][x] = 2
             counter = counter +1
-        if random.randint(1,int(10000/(1+y/50)))==1 and world[y][x]==1:
+        
+        if random.randint(1,int(25000/(1+y/200)))==1 and world[y][x]==1 and y>200:
                   world[y][x]=10
+        
+        if random.randint(1,int(400*(1+y/200)))==1 and world[y][x]==1 and y<450:
+                  world[y][x]=11
+        
+        if random.randint(1,int(1000/(1+y/500)))==1 and world[y][x]==1 and y>100:
+                  world[y][x]=12
+        
         if y<= screen.get_height()//64:
             world[y][x] =99
-        if y>= 190- screen.get_height()//64:
+        if y>= yr-10- screen.get_height()//64:
             world[y][x] = 99
 selectedBlock=1
 framecounter = 0
@@ -430,7 +456,7 @@ while True:
                             world[int(character.posY-character.H/2+32)//32][(character.posX-character.W//2-32)//32] =0
                         elif  world[int(character.posY-character.H/2+64)//32][(character.posX-character.W//2-32)//32] !=99 and not a: 
                             world[int(character.posY-character.H/2+64)//32][(character.posX-character.W//2-32)//32] =0
-        if character.posX>= 5600:
+        if character.posX>= xr*32-800:
             mozeDesno = False
         if character.posX <= 800:
             mozeLevo = False 
@@ -451,9 +477,8 @@ while True:
         else:
             character.vY = 0
         character.posY += character.vY
-            
 
-        
+                
         menjansvet = False
         draw(True,daynightcycle)
         pg.draw.rect(screen, "Black", (0, 0, 300, 190))
@@ -470,6 +495,13 @@ while True:
         screen.blit(text_surface3, (15, 70))
         screen.blit(text_surface4, (15, 40))
         screen.blit(text_surface5, (15, 10))
+        xsh=str(character.posX//32-23)
+        ysh=str(yr-character.posY//32-23)
+      
+        font=pg.font.SysFont(None,45)
+        text = font.render('X: '+xsh+' Y: '+ysh, True, (0,0,0))
+        DISPLAYSURF.blit(text,(950,20))
+        
         w = max(280, text_surface.get_width() + 10)
         
         pg.display.update()
