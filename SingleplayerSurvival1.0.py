@@ -446,12 +446,12 @@ while True:
                             LB[selectedBlock-1]-=1
         if pg.mouse.get_pressed()[0]:
                     if pg.mouse.get_pos()[0] > displayPX + character.W:
-                        if pg.mouse.get_pos()[1] < displayPY and world[int(character.posY-character.H/2-3)//32][(character.posX-character.W//2+32)//32] !=99 and not a and world[int(character.posY-character.H/2-3)//32][(character.posX-character.W//2+32)//32] !=0:
+                        if pg.mouse.get_pos()[1] < displayPY and world[int(character.posY-character.H/2-32)//32][(character.posX-character.W//2+32)//32] !=99 and not a and world[int(character.posY-character.H/2-32)//32][(character.posX-character.W//2+32)//32] !=0:
                             if world[int(character.posY-character.H/2-32)//32][(character.posX-character.W//2+32)//32] not in L1:
                               L=L[1: ]
-                              L.append(Block_Dict[world[int(character.posY-character.H/2-3)//32][(character.posX-character.W//2+32)//32]]["texture"])
+                              L.append(Block_Dict[world[int(character.posY-character.H/2-32)//32][(character.posX-character.W//2+32)//32]]["texture"])
                               L1=L1[1: ]
-                              L1.append(world[int(character.posY-character.H/2-3)//32][(character.posX-character.W//2+32)//32])
+                              L1.append(world[int(character.posY-character.H/2-32)//32][(character.posX-character.W//2+32)//32])
                               LB=LB[1: ]
                               LB.append(1)
                             else:
