@@ -409,42 +409,33 @@ while True:
                 
         keys = pg.key.get_pressed()
         menjansvet = True
-        if pg.mouse.get_pressed()[2]:
+        if pg.mouse.get_pressed()[2] and a==False:
                     if pg.mouse.get_pos()[0] > displayPX + character.W:
                         if pg.mouse.get_pos()[1] < displayPY and world[int(character.posY-character.H/2-32)//32][(character.posX-character.W//2+32)//32]  ==0 and L1[selectedBlock-1]!=-1 and LB[selectedBlock-1]>0:
                             world[int(character.posY-character.H/2-32)//32][(character.posX-character.W//2+32)//32] =L1[selectedBlock-1]
-                            LB[selectedBlock-1]-=1
                         elif pg.mouse.get_pos()[1]<displayPY+32  and world[int(character.posY-character.H/2)//32][(character.posX-character.W//2+32)//32] ==0 and pg.mouse.get_pos()[1] > displayPY and L1[selectedBlock-1]!=-1 and LB[selectedBlock-1]>0: 
                             world[int(character.posY-character.H/2)//32][(character.posX-character.W//2+32)//32] =L1[selectedBlock-1]
-                            LB[selectedBlock-1]-=1
                         elif pg.mouse.get_pos()[1]<displayPY+64  and world[int(character.posY-character.H/2+32)//32][(character.posX-character.W//2+32)//32] ==0 and pg.mouse.get_pos()[1] > displayPY+32 and L1[selectedBlock-1]!=-1 and LB[selectedBlock-1]>0: 
                             world[int(character.posY-character.H/2+32)//32][(character.posX-character.W//2+32)//32] =L1[selectedBlock-1]
-                            LB[selectedBlock-1]-=1
                         elif  world[int(character.posY-character.H/2+64)//32][(character.posX-character.W//2+32)//32] ==0 and pg.mouse.get_pos()[1] > displayPY+64 and L1[selectedBlock-1]!=-1 and LB[selectedBlock-1]>0: 
                             world[int(character.posY-character.H/2+64)//32][(character.posX-character.W//2+32)//32] =L1[selectedBlock-1]
-                            LB[selectedBlock-1]-=1
                     elif pg.mouse.get_pos()[0] > displayPX+character.W-32 :
                         if pg.mouse.get_pos()[1] < displayPY and world[int(character.posY-character.H/2-32)//32][(character.posX-character.W//2)//32] ==0 and L1[selectedBlock-1]!=-1 and LB[selectedBlock-1]>0:
                             world[int(character.posY-character.H/2-32)//32][(character.posX-character.W//2)//32] = L1[selectedBlock-1]
-                            LB[selectedBlock-1]-=1
                 
                         elif  pg.mouse.get_pos()[1] > displayPY+32 and world[int(character.posY-character.H/2+64)//32][(character.posX-character.W//2)//32] ==0 and L1[selectedBlock-1]!=-1 and LB[selectedBlock-1]>0: 
                             world[int(character.posY-character.H/2+64)//32][(character.posX-character.W//2)//32] =L1[selectedBlock-1]
-                            LB[selectedBlock-1]-=1
                     else:
                         if pg.mouse.get_pos()[1] < displayPY and world[int(character.posY-character.H/2-32)//32][(character.posX-character.W//2-32)//32] ==0 and L1[selectedBlock-1]!=-1 and LB[selectedBlock-1]>0:
                             world[int(character.posY-character.H/2-32)//32][(character.posX-character.W//2-32)//32] = L1[selectedBlock-1]
-                            LB[selectedBlock-1]-=1
                         elif pg.mouse.get_pos()[1]<displayPY+32  and world[int(character.posY-character.H/2)//32][(character.posX-character.W//2-32)//32] ==0 and pg.mouse.get_pos()[1] > displayPY and L1[selectedBlock-1]!=-1 and LB[selectedBlock-1]>0: 
                             world[int(character.posY-character.H/2)//32][(character.posX-character.W//2-32)//32] =L1[selectedBlock-1]
-                            LB[selectedBlock-1]-=1
                         elif pg.mouse.get_pos()[1]<displayPY+64  and world[int(character.posY-character.H/2+32)//32][(character.posX-character.W//2-32)//32] ==0 and  pg.mouse.get_pos()[1] > displayPY+32 and L1[selectedBlock-1]!=-1 and LB[selectedBlock-1]>0: 
                             world[int(character.posY-character.H/2+32)//32][(character.posX-character.W//2-32)//32] =L1[selectedBlock-1]
-                            LB[selectedBlock-1]-=1
                         elif  world[int(character.posY-character.H/2+64)//32][(character.posX-character.W//2-32)//32] ==0  and pg.mouse.get_pos()[1] > displayPY +64 and L1[selectedBlock-1]!=-1 and LB[selectedBlock-1]>0: 
                             world[int(character.posY-character.H/2+64)//32][(character.posX-character.W//2-32)//32] =L1[selectedBlock-1]
-                            LB[selectedBlock-1]-=1
-        if pg.mouse.get_pressed()[0]:
+                    LB[selectedBlock-1]-=1
+        if pg.mouse.get_pressed()[0] and a==False:
                     if pg.mouse.get_pos()[0] > displayPX + character.W:
                         if pg.mouse.get_pos()[1] < displayPY and world[int(character.posY-character.H/2-32)//32][(character.posX-character.W//2+32)//32] !=99 and not a and world[int(character.posY-character.H/2-32)//32][(character.posX-character.W//2+32)//32] !=0:
                             if world[int(character.posY-character.H/2-32)//32][(character.posX-character.W//2+32)//32] not in L1:
