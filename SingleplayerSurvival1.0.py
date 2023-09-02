@@ -103,22 +103,23 @@ for x in range(xr):
                 world[y-4][x-1] = 5
                 world[y-4][x-2] = 5
                 nesusedni=0
-            if random.randint(1,int(25000/(1+y/200)))==1 and world[y][x]==1 and y>200:
-                  world[y][x]=10
-            if random.randint(1,int(400*(1+y/200)))==1 and world[y][x]==1 and y<450:
-                  world[y][x]=11
-            if random.randint(1,int(1000/(1+y/500)))==1 and world[y][x]==1 and y>100:
-                  world[y][x]=12
-            if random.randint(1,int(2000/(1+y/500)))==1 and world[y][x]==1 and y>250:
-                  world[y][x]=13
-            if random.randint(1,int(30000/(1+y/100)))==1 and world[y][x]==1 and y>500:
-                  world[y][x]=14
-            if random.randint(1,int(6000/(1+y/200)))==1 and world[y][x]==1 and y>600:
-                  world[y][x]=15
-            if y<= screen.get_height()//64:
-              world[y][x] =99
-            if y>= yr-10- screen.get_height()//64:
-              world[y][x] = 99
+        L=np.random.randint(int(30000/(1+y/200)))
+        if L<2 and world[y][x]<1 and y>200:
+            world[y][x]=10
+        if L<76 and world[y][x]==1 and y<450:
+            world[y][x]=11
+        if L<31 and world[y][x]==1 and y>100:
+            world[y][x]=12
+        if L<15 and world[y][x]==1 and y>250:
+            world[y][x]=13
+        if L<2 and world[y][x]==1 and y>500:
+            world[y][x]=14
+        if L<5 and world[y][x]==1 and y>600:
+            world[y][x]=15
+        if y<=screen.get_height()//64:
+            world[y][x] =99
+        if y>=yr-10- screen.get_height()//64:
+            world[y][x] = 99
 
 Block_Dict = {
     0 : {"block_name" : "Air" , "breaking_time" : 0 , "breaking_tool" : "null", "hardness" : 1000, "texture" : "null" , "walk_sound" : "null", "break_sound" : "null"},
