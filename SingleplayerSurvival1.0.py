@@ -1,7 +1,12 @@
 import pygame as pg
-import sys, random
+import sys
 import noise
 from math import*
+import numpy as np
+import pyfastnoisesimd as fns
+import random
+import warnings
+warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 class Character:
   def __init__(self, posX, posY, vX, vY ,health, stamina, defence, dmg, W, H, skinL, skinD , isInAir, isOnIce, isInWater, isFlying, isSing, o2):
@@ -43,12 +48,36 @@ xr=10000+23
 yr=1000+23
 world = [[0 for i in range(xr)] for i in range(yr)]
 
-startx = random.randint(1,10000)
+chi=175
+
+seed = np.random.randint(2**31)
+seed1 = np.random.randint(10000)
+shape = [10240, 1024]
+N_threads = 4
+perlin = fns.Noise(seed=seed, numWorkers=N_threads)
+perlin.frequency = 0.02
+perlin.noiseType = fns.NoiseType.Perlin
+perlin.fractal.octaves = 4
+perlin.fractal.lacunarity = 2.1
+perlin.fractal.gain = 0.4
+perlin.gain=0.5
+perlin.perturb.perturbType = fns.PerturbType.NoPerturb
+cavesys = perlin.genAsGrid(shape)
+scale=10
+
+print(seed,seed1)
+
 for x in range(xr):
-    gen = 3*noise.pnoise1(x*0.02 + startx, repeat=999999999, persistence=0.1)
+    gen = scale*noise.pnoise1(x/(16*scale) + 1, repeat=999999999, persistence=0.1)
     for i in range(abs(int(gen * 10) + 125),yr):
         world[i][x] = 1
-
+        if 0.1<cavesys[x][i]<0.3:
+            world[i][x]=0
+            world[abs(int(gen * 10) + 125)][x]=1
+            world[abs(int(gen * 10) + 126)][x]=1
+            world[abs(int(gen * 10) + 127)][x]=1
+            world[abs(int(gen * 10) + 128)][x]=1
+            world[abs(int(gen * 10) + 129)][x]=1
 
 Block_Dict = {
     0 : {"block_name" : "Air" , "breaking_time" : 0 , "breaking_tool" : "null", "hardness" : 1000, "texture" : "null" , "walk_sound" : "null", "break_sound" : "null"},
@@ -133,8 +162,8 @@ def draw(menjansvet, daynightcycle):
                     if world[y][x]==1 or world[y][x]==10 or world[y][x]==11 or world[y][x]==12 or world[y][x]==13 or world[y][x]==14 or world[y][x]==15:
                         imp = Block_Dict[98]["texture"]
                 elif distance>2:
-                    if world[y][x]==1:
-                        imp = Block_Dict[97]["texture"]    
+                  if world[y][x]==1:
+                        imp = Block_Dict[97]["texture"]
                 screen.blit(imp,(cnt2*32,cnt1 *32))
     if LastClick == 1:
         screen.blit(chard,(screen.get_width()//2-32, screen.get_height()//2-24, character.W, character.H)) #HARDCODE
@@ -257,7 +286,10 @@ for x in range(xr):
                 world[y-3][x] = 4
                 world[y-4][x] = 4
                 world[y-5][x] = 4
-                world[y-6][x] = 5
+                world[y-7][x] = 5
+                world[y-7][x+1] = 5
+                world[y-7][x-1] = 5
+                world[y-6][x] = 4
                 world[y-6][x+1] = 5
                 world[y-6][x-1] = 5
                 world[y-5][x-1] = 5
