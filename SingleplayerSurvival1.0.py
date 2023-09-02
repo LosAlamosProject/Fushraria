@@ -25,6 +25,8 @@ class Character:
     self.o2 = o2
 pg.init()
 
+testerdontuse="asdawdasx"
+
 screen = pg.display.set_mode((1280,800))
 
 DISPLAYSURF = pg.display.set_mode((1280,800),pg.FULLSCREEN)
@@ -37,13 +39,13 @@ ground = pg.Rect(0, 500, 800, 100)
  
 yd = 0
 
-xr=100+23
+xr=10000+23
 yr=1000+23
 world = [[0 for i in range(xr)] for i in range(yr)]
 
 startx = random.randint(1,10000)
 for x in range(xr):
-    gen = noise.pnoise1(x*0.1 + startx, repeat=999999999, persistence=0.1)
+    gen = 3*noise.pnoise1(x*0.02 + startx, repeat=999999999, persistence=0.1)
     for i in range(abs(int(gen * 10) + 125),yr):
         world[i][x] = 1
 
@@ -62,6 +64,9 @@ Block_Dict = {
     10 :{"block_name" : "Uranium" , "breaking_time" : 360 , "breaking_tool" : "pickaxe", "hardness" : 1, "texture" :pg.image.load(".\\Uranium.png").convert() , "walk_sound" : "walk_sound", "break_sound" : "stonebreak.ogg"},
     11 :{"block_name" : "Coal" , "breaking_time" : 150 , "breaking_tool" : "pickaxe", "hardness" : 1, "texture" :pg.image.load(".\\Coal.png").convert() , "walk_sound" : "walk_sound", "break_sound" : "stonebreak.ogg"},
     12 :{"block_name" : "Iron" , "breaking_time" : 180 , "breaking_tool" : "pickaxe", "hardness" : 1, "texture" :pg.image.load(".\\Iron.png").convert() , "walk_sound" : "walk_sound", "break_sound" : "stonebreak.ogg"},
+    13 :{"block_name" : "Gold" , "breaking_time" : 200 , "breaking_tool" : "pickaxe", "hardness" : 1, "texture" :pg.image.load(".\\Gold.png").convert() , "walk_sound" : "walk_sound", "break_sound" : "stonebreak.ogg"},
+    14 :{"block_name" : "Platinum" , "breaking_time" : 400 , "breaking_tool" : "pickaxe", "hardness" : 1, "texture" :pg.image.load(".\\Platinum.png").convert() , "walk_sound" : "walk_sound", "break_sound" : "stonebreak.ogg"},
+    15 :{"block_name" : "Diamond" , "breaking_time" : 500 , "breaking_tool" : "pickaxe", "hardness" : 1, "texture" :pg.image.load(".\\Diamond.png").convert() , "walk_sound" : "walk_sound", "break_sound" : "stonebreak.ogg"},
     97 : {"block_name" : "Stone1" , "breaking_time" : 0 , "breaking_tool" : "null", "hardness" : 1, "texture" : pg.image.load(".\\Stone1.png").convert() , "walk_sound" : "walk_sound", "break_sound" : "stonebreak.ogg"},
     98 : {"block_name" : "Stone2" , "breaking_time" : 0 , "breaking_tool" : "null", "hardness" : 1, "texture" : pg.image.load(".\\Stone2.png").convert() , "walk_sound" : "walk_sound", "break_sound" : "stonebreak.ogg"},
     99 : {"block_name" : "Bedrok" , "breaking_time" : 0 , "breaking_tool" : "null", "hardness" : 6969, "texture" : pg.image.load(".\\Bedrock.png").convert() , "walk_sound" : "bedrock.ogg", "break_sound" : "null"}
@@ -125,7 +130,7 @@ def draw(menjansvet, daynightcycle):
                 imp = Block_Dict[world[y][x]]["texture"]    
                 disc(x,y)
                 if distance>3:
-                    if world[y][x]==1 or world[y][x]==10 or world[y][x]==11 or world[y][x]==12:
+                    if world[y][x]==1 or world[y][x]==10 or world[y][x]==11 or world[y][x]==12 or world[y][x]==13 or world[y][x]==14 or world[y][x]==15:
                         imp = Block_Dict[98]["texture"]
                 elif distance>2:
                     if world[y][x]==1:
@@ -270,12 +275,17 @@ for x in range(xr):
         
         if random.randint(1,int(25000/(1+y/200)))==1 and world[y][x]==1 and y>200:
                   world[y][x]=10
-        
         if random.randint(1,int(400*(1+y/200)))==1 and world[y][x]==1 and y<450:
                   world[y][x]=11
-        
         if random.randint(1,int(1000/(1+y/500)))==1 and world[y][x]==1 and y>100:
                   world[y][x]=12
+        if random.randint(1,int(2000/(1+y/500)))==1 and world[y][x]==1 and y>250:
+                  world[y][x]=13
+        if random.randint(1,int(30000/(1+y/100)))==1 and world[y][x]==1 and y>500:
+                  world[y][x]=14
+        if random.randint(1,int(6000/(1+y/200)))==1 and world[y][x]==1 and y>600:
+                  world[y][x]=15
+        
         
         if y<= screen.get_height()//64:
             world[y][x] =99
